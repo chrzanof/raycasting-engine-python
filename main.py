@@ -12,9 +12,9 @@ map_y = 8
 map_s = 64
 px = 300
 py = 300
-pa = 0.0
+pa = 1.5 * pi
 dpa = 0.1
-fov = radians(72)
+fov = radians(60)
 dpx = 0
 dpy = 0
 map = [
@@ -197,7 +197,7 @@ def cast_rays():
             wall_color = "#0fb014"
             canvas.create_line(px, py, px + yrdx, py + yrdy, fill=wall_color)
             wall_dist = yrh
-        # wall_dist = wall_dist * cos(abs(fov/2 - dra))  # fish eye effect correction
+        wall_dist = wall_dist * cos(pa - ra)  # fish eye effect correction
         line_height = screen_height * map_s / wall_dist
         if line_height > screen_height:
             line_height = screen_height
