@@ -5,8 +5,8 @@ from math import *
 
 screen_height = 512
 screen_width = 512
-screen_3d_offset_x = 768
-screen_3d_offset_y = 256
+screen_3d_offset_x = screen_width
+screen_3d_offset_y = screen_height / 2
 map_x = 8
 map_y = 8
 map_s = 64
@@ -14,6 +14,7 @@ px = 300
 py = 300
 pa = 0.0
 dpa = 0.1
+fov = radians(72)
 dpx = 0
 dpy = 0
 map = [
@@ -30,8 +31,8 @@ map = [
 player_input = ""
 player_movement_increment = 4
 window = Tk()
-window.title("test")
-canvas = Canvas(window, height=512, width=1024)
+window.title("Raycast Engine")
+canvas = Canvas(window, height=screen_height, width=screen_width + 512)
 
 
 def process_input(event):
@@ -82,7 +83,7 @@ def render_view():
 
 def draw_map():
     canvas.delete("all")
-    canvas.create_rectangle(0, 0, 1024, 512, fill="grey")
+    canvas.create_rectangle(0, 0, 1024, 512, fill="black")
     for x in range(0, map_y):
         for y in range(0, map_x):
             x0 = x * map_s
@@ -100,45 +101,41 @@ def draw_player():
 
 def cast_rays():
     global px, py, pa
-    x_step = 0
-    y_step = 0
-    player_tile_pos_y = int(py / map_s)
-    player_tile_pos_x = int(px / map_s)
-    ra = pa
-    wall_dist = 0
-    wall_color = "green"
-    if 0 < ra < pi:
-        y_step = 1
-    if pi < ra < 2 * pi:
-        y_step = -1
-    if 0 <= ra < 0.5 * pi or 1.5 * pi < ra <= 2 * pi:
-        x_step = 1
-    if 0.5 * pi < ra < 1.5 * pi:
-        x_step = -1
+    ra = pa - fov / 2
+    dra = fov / screen_width
+    for i in range(0, screen_width):
+        if ra < 0:
+            ra = ra + 2 * pi
+        if ra > 2*pi:
+            ra = ra - 2 * pi
+        x_step = 0
+        y_step = 0
+        player_tile_pos_y = int(py / map_s)
+        player_tile_pos_x = int(px / map_s)
+        wall_dist = 0
+        wall_color = "#19fa21"
+        if 0 < ra < pi:
+            y_step = 1
+        if pi < ra < 2 * pi:
+            y_step = -1
+        if 0 <= ra < 0.5 * pi or 1.5 * pi < ra <= 2 * pi:
+            x_step = 1
+        if 0.5 * pi < ra < 1.5 * pi:
+            x_step = -1
 
-    # horizontal check - green ray
-    grdx, grdy, grh = 0, 0, 0
-    if x_step != 0:
-        reverse = 0
-        if x_step == -1:
-            reverse = 1
-        hith = False
+        # horizontal check - green ray
+        grdx, grdy, grh = 0, 0, 0
+        if x_step != 0:
+            reverse = 0
+            if x_step == -1:
+                reverse = 1
+            hith = False
 
-        if x_step == 1:
-            grdx = (player_tile_pos_x + x_step) * map_s - px
-        elif x_step == -1:
-            grdx = player_tile_pos_x * map_s - px
+            if x_step == 1:
+                grdx = (player_tile_pos_x + x_step) * map_s - px
+            elif x_step == -1:
+                grdx = player_tile_pos_x * map_s - px
 
-        grdy = grdx * tan(ra)
-        grh = sqrt(grdx ** 2 + grdy ** 2)
-        if 0 < int((py + grdy)) < screen_height:
-            if map[int((py + grdy - reverse) / map_s)][int((px + grdx - reverse) / map_s)] == 1:
-                hith = True
-        else:
-            hith = True
-
-        while not hith:
-            grdx += x_step * map_s
             grdy = grdx * tan(ra)
             grh = sqrt(grdx ** 2 + grdy ** 2)
             if 0 < int((py + grdy)) < screen_height:
@@ -146,32 +143,32 @@ def cast_rays():
                     hith = True
             else:
                 hith = True
-    else:
-        grh = inf
 
-    # vertical check -- yellow ray
-    yrdx, yrdy, yrh = 0, 0, 0
-    if y_step != 0:
-        reverse = 0
-        if y_step == -1:
-            reverse = 1
-        hitv = False
-
-        if y_step == 1:
-            yrdy = (player_tile_pos_y + y_step) * map_s - py
-        elif y_step == -1:
-            yrdy = player_tile_pos_y * map_s - py
-
-        yrdx = yrdy * 1 / tan(ra)
-        yrh = sqrt(yrdx ** 2 + yrdy ** 2)
-        if 0 < int((px + yrdx)) < screen_width:
-            if map[int((py + yrdy - reverse) / map_s)][int((px + yrdx - reverse) / map_s)] == 1:
-                hitv = True
+            while not hith:
+                grdx += x_step * map_s
+                grdy = grdx * tan(ra)
+                grh = sqrt(grdx ** 2 + grdy ** 2)
+                if 0 < int((py + grdy)) < screen_height:
+                    if map[int((py + grdy - reverse) / map_s)][int((px + grdx - reverse) / map_s)] == 1:
+                        hith = True
+                else:
+                    hith = True
         else:
-            hitv = True
+            grh = inf
 
-        while not hitv:
-            yrdy += y_step * map_s
+        # vertical check -- yellow ray
+        yrdx, yrdy, yrh = 0, 0, 0
+        if y_step != 0:
+            reverse = 0
+            if y_step == -1:
+                reverse = 1
+            hitv = False
+
+            if y_step == 1:
+                yrdy = (player_tile_pos_y + y_step) * map_s - py
+            elif y_step == -1:
+                yrdy = player_tile_pos_y * map_s - py
+
             yrdx = yrdy * 1 / tan(ra)
             yrh = sqrt(yrdx ** 2 + yrdy ** 2)
             if 0 < int((px + yrdx)) < screen_width:
@@ -179,24 +176,35 @@ def cast_rays():
                     hitv = True
             else:
                 hitv = True
-    else:
-        yrh = inf
 
-    if grh < yrh:
-        canvas.create_line(px, py, px + grdx, py + grdy, fill="green")
-        canvas.create_oval(px + grdx - 4, py + grdy - 4, px + grdx + 4, py + grdy + 4, fill="green")
-        wall_dist = grh
-        wall_color = "green"
-    else:
-        canvas.create_oval(px + yrdx - 4, py + yrdy - 4, px + yrdx + 4, py + yrdy + 4, fill="yellow")
-        canvas.create_line(px, py, px + yrdx, py + yrdy, fill="yellow")
-        wall_dist = yrh
-        wall_color = "yellow"
+            while not hitv:
+                yrdy += y_step * map_s
+                yrdx = yrdy * 1 / tan(ra)
+                yrh = sqrt(yrdx ** 2 + yrdy ** 2)
+                if 0 < int((px + yrdx)) < screen_width:
+                    if map[int((py + yrdy - reverse) / map_s)][int((px + yrdx - reverse) / map_s)] == 1:
+                        hitv = True
+                else:
+                    hitv = True
+        else:
+            yrh = inf
 
-    line_height = screen_height * map_s / wall_dist
-    if line_height > screen_height:
-        line_height = screen_height
-    canvas.create_line(screen_3d_offset_x, screen_3d_offset_y - 0.5 * line_height, screen_3d_offset_x, screen_3d_offset_y + 0.5 * line_height, fill=wall_color)
+        if grh < yrh:
+            wall_color = "#19fa21"
+            canvas.create_line(px, py, px + grdx, py + grdy, fill=wall_color)
+            wall_dist = grh
+        else:
+            wall_color = "#0fb014"
+            canvas.create_line(px, py, px + yrdx, py + yrdy, fill=wall_color)
+            wall_dist = yrh
+        # wall_dist = wall_dist * cos(abs(fov/2 - dra))  # fish eye effect correction
+        line_height = screen_height * map_s / wall_dist
+        if line_height > screen_height:
+            line_height = screen_height
+        canvas.create_line(screen_3d_offset_x + i, screen_3d_offset_y - 0.5 * line_height, screen_3d_offset_x + i,
+                           screen_3d_offset_y + 0.5 * line_height, fill=wall_color)
+
+        ra = ra + dra
 
 
 def loop():
