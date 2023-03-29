@@ -14,9 +14,11 @@ px = 300
 py = 300
 pa = 1.5 * pi
 dpa = 0.1
-fov = radians(60)
+fov = radians(72)
 dpx = 0
 dpy = 0
+wall_color_horizontal = "#19fa21"
+wall_color_vertical = "#0fb014"
 map = [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 1, 0, 0, 1],
@@ -77,8 +79,8 @@ def update():
 def render_view():
     draw_map()
     draw_player()
-    canvas.pack()
     cast_rays()
+    canvas.pack()
 
 
 def draw_map():
@@ -112,8 +114,7 @@ def cast_rays():
         y_step = 0
         player_tile_pos_y = int(py / map_s)
         player_tile_pos_x = int(px / map_s)
-        wall_dist = 0
-        wall_color = "#19fa21"
+
         if 0 < ra < pi:
             y_step = 1
         if pi < ra < 2 * pi:
@@ -190,11 +191,11 @@ def cast_rays():
             yrh = inf
 
         if grh < yrh:
-            wall_color = "#19fa21"
+            wall_color = wall_color_horizontal
             canvas.create_line(px, py, px + grdx, py + grdy, fill=wall_color)
             wall_dist = grh
         else:
-            wall_color = "#0fb014"
+            wall_color = wall_color_vertical
             canvas.create_line(px, py, px + yrdx, py + yrdy, fill=wall_color)
             wall_dist = yrh
         wall_dist = wall_dist * cos(pa - ra)  # fish eye effect correction
