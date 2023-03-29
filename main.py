@@ -12,9 +12,9 @@ map_y = 8
 map_s = 64
 px = 300
 py = 300
-pa = 1.5 * pi
+pa = 0.0
 dpa = 0.1
-fov = radians(72)
+fov = radians(60)
 dpx = 0
 dpy = 0
 wall_color_horizontal = "#19fa21"
@@ -85,7 +85,8 @@ def render_view():
 
 def draw_map():
     canvas.delete("all")
-    canvas.create_rectangle(0, 0, 1024, 512, fill="black")
+    canvas.create_rectangle(0, 0, 1024, 512, fill="grey")
+    canvas.create_rectangle(512, 0, 1024, 256, fill="#00FFFF")
     for x in range(0, map_y):
         for y in range(0, map_x):
             x0 = x * map_s
@@ -108,7 +109,7 @@ def cast_rays():
     for i in range(0, screen_width):
         if ra < 0:
             ra = ra + 2 * pi
-        if ra > 2*pi:
+        if ra >= 2*pi:
             ra = ra - 2 * pi
         x_step = 0
         y_step = 0
@@ -198,12 +199,17 @@ def cast_rays():
             wall_color = wall_color_vertical
             canvas.create_line(px, py, px + yrdx, py + yrdy, fill=wall_color)
             wall_dist = yrh
-        wall_dist = wall_dist * cos(pa - ra)  # fish eye effect correction
-        line_height = screen_height * map_s / wall_dist
+        ca = pa - ra
+        if ca < 0:
+            ca += 2*pi
+        if ca >= 2*pi:
+            ca -= 2*pi
+        wall_dist = wall_dist * cos(ca)  # fish eye effect correction
+        line_height = int(screen_height * map_s / wall_dist)
         if line_height > screen_height:
             line_height = screen_height
-        canvas.create_line(screen_3d_offset_x + i, screen_3d_offset_y - 0.5 * line_height, screen_3d_offset_x + i,
-                           screen_3d_offset_y + 0.5 * line_height, fill=wall_color)
+        canvas.create_line(screen_3d_offset_x + i, screen_3d_offset_y - int(0.5 * line_height), screen_3d_offset_x + i,
+                           screen_3d_offset_y + int(0.5 * line_height), fill=wall_color)
 
         ra = ra + dra
 
