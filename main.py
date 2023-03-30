@@ -85,8 +85,8 @@ def render_view():
 
 def draw_map():
     canvas.delete("all")
-    canvas.create_rectangle(0, 0, 1024, 512, fill="grey")
-    canvas.create_rectangle(512, 0, 1024, 256, fill="#00FFFF")
+    canvas.create_rectangle(0, 0, 1024, 512, fill="grey", width=0)
+    canvas.create_rectangle(512, 0, 1024, 256, fill="#00FFFF", width=0)
     for x in range(0, map_y):
         for y in range(0, map_x):
             x0 = x * map_s
@@ -94,7 +94,7 @@ def draw_map():
             color = "black"
             if map[y][x] == 1:
                 color = "white"
-            canvas.create_rectangle(x0, y0, x0 + map_s, y0 + map_s, fill=color)
+            canvas.create_rectangle(x0, y0, x0 + map_s, y0 + map_s, fill=color, width=0)
 
 
 def draw_player():
@@ -105,11 +105,12 @@ def draw_player():
 def cast_rays():
     global px, py, pa
     ra = pa - fov / 2
-    dra = fov / screen_width
-    for i in range(0, screen_width):
+    number_of_rays = 200
+    dra = fov / number_of_rays
+    for i in range(0, number_of_rays):
         if ra < 0:
             ra = ra + 2 * pi
-        if ra >= 2*pi:
+        if ra > 2*pi:
             ra = ra - 2 * pi
         x_step = 0
         y_step = 0
@@ -199,17 +200,28 @@ def cast_rays():
             wall_color = wall_color_vertical
             canvas.create_line(px, py, px + yrdx, py + yrdy, fill=wall_color)
             wall_dist = yrh
+
         ca = pa - ra
         if ca < 0:
-            ca += 2*pi
-        if ca >= 2*pi:
-            ca -= 2*pi
+            ca += 2 * pi
+        if ca >= 2 * pi:
+            ca -= 2 * pi
         wall_dist = wall_dist * cos(ca)  # fish eye effect correction
-        line_height = int(screen_height * map_s / wall_dist)
+        line_height = screen_height * map_s / wall_dist
+
+        screen_dx = wall_dist * tan(fov/2) - wall_dist * tan(ca)
+        a = screen_dx / (2*wall_dist*tan(fov/2))
+        screen_position_x = screen_3d_offset_x + a * screen_width
+        next_screen_position_x = screen_position_x
+        if i < number_of_rays:
+            screen_dx_next = wall_dist * tan(fov/2) - wall_dist * tan(ca - dra)
+            a_next = screen_dx_next / (2*wall_dist*tan(fov/2))
+            next_screen_position_x = screen_3d_offset_x + a_next * screen_width
+
         if line_height > screen_height:
             line_height = screen_height
-        canvas.create_line(screen_3d_offset_x + i, screen_3d_offset_y - int(0.5 * line_height), screen_3d_offset_x + i,
-                           screen_3d_offset_y + int(0.5 * line_height), fill=wall_color)
+        canvas.create_rectangle(screen_position_x, screen_3d_offset_y - 0.5 * line_height, next_screen_position_x,
+                           screen_3d_offset_y + 0.5 * line_height, fill=wall_color , width=0)
 
         ra = ra + dra
 
