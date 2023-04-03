@@ -3,6 +3,15 @@ from tkinter import *
 from datetime import datetime
 from math import *
 
+
+def return_rotated_matrix(matrix):
+    t = [[0 for col in range(len(matrix[row]))] for row in range(len(matrix))]
+    for i in range(0, len(matrix)):
+        for j in range(0, len(matrix[i])):
+            t[len(matrix) - 1 - j][i] = matrix[i][j]
+    return t
+
+
 level_map = [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 1, 0, 0, 1],
@@ -13,6 +22,7 @@ level_map = [
     [1, 0, 0, 0, 0, 1, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1],
 ]
+level_map_rotated = return_rotated_matrix(level_map)
 screen_height = 768
 screen_width = 768
 screen_3d_offset_x = screen_width
@@ -21,9 +31,9 @@ map_x = len(level_map[0])
 map_y = len(level_map)
 if screen_width / map_x != screen_height / map_y: raise Exception("Wrong window size")
 map_s = screen_width / map_x
-px = 400
-py = 400
-pa = 0.0
+px = 301
+py = 650
+pa = -0.1
 dpa = 0.1
 fov = radians(60)
 dpx = 0
@@ -77,124 +87,120 @@ def update():
 
 
 def render_view():
-    draw_map()
-    draw_player()
+    global canvas, px, py, pa
+    canvas = draw_map(level_map, canvas)
+    canvas = draw_player(canvas, px, py, pa)
     cast_rays()
     canvas.pack()
 
 
-def draw_map():
-    canvas.delete("all")
-    canvas.create_rectangle(0, 0, screen_width * 2, screen_height, fill="grey", width=0)
-    canvas.create_rectangle(screen_width, 0, screen_width * 2, screen_height / 2, fill="#00FFFF", width=0)
+def draw_map(level, cv):
+    cv.delete("all")
+    cv.create_rectangle(0, 0, screen_width * 2, screen_height, fill="grey", width=0)
+    cv.create_rectangle(screen_width, 0, screen_width * 2, screen_height / 2, fill="#00FFFF", width=0)
     for x in range(0, map_y):
         for y in range(0, map_x):
             x0 = x * map_s
             y0 = y * map_s
             color = "black"
-            if level_map[y][x] == 1:
+            if level[y][x] == 1:
                 color = "white"
-            canvas.create_rectangle(x0, y0, x0 + map_s, y0 + map_s, fill=color, width=0)
+            cv.create_rectangle(x0, y0, x0 + map_s, y0 + map_s, fill=color, width=0)
+    return cv
 
 
-def draw_player():
-    canvas.create_oval(px - 4, py - 4, px + 4, py + 4, fill="yellow")
-    canvas.create_line(px, py, px + 16 * cos(pa), py + 16 * sin(pa), fill="yellow", width=3)
+def draw_player(cv, player_x, player_y, player_angle):
+    cv.create_oval(player_x - 4, player_y - 4, player_x + 4, player_y + 4, fill="yellow")
+    cv.create_line(player_x, player_y, player_x + 16 * cos(player_angle), player_y + 16 * sin(player_angle),
+                   fill="yellow", width=3)
+    return cv
+
+
+def check_ray_length(ray_angle, player_x, player_y, level):
+    player_tile_pos_x = int(player_x / map_s)
+    reverse = 0
+    step = 0
+    ray_dx = 0
+    if 0 <= ray_angle < 0.5 * pi or 1.5 * pi < ray_angle <= 2 * pi:
+        step = 1
+    if 0.5 * pi < ray_angle < 1.5 * pi:
+        step = -1
+
+    if step != 0:
+        if step == 1:
+            ray_dx = (player_tile_pos_x + step) * map_s - player_x
+        elif step == -1:
+            ray_dx = player_tile_pos_x * map_s - player_x
+            reverse = 1
+
+        while True:
+            ray_dy = ray_dx * tan(ray_angle)
+            ray_length = sqrt(ray_dx ** 2 + ray_dy ** 2)
+            if 0 < int((player_y + ray_dy)) < screen_height:
+                if level[int((player_y + ray_dy - reverse) / map_s)][int((player_x + ray_dx - reverse) / map_s)] == 1:
+                    break
+            else:
+                break
+            ray_dx += step * map_s
+    else:
+        ray_length = inf
+    return ray_length
+
+
+def return_rotated_player_position(player_x, player_y, angle_to_rotate):
+    px_rotated = (player_x - screen_width / 2) * cos(radians(angle_to_rotate)) - (player_y - screen_height / 2) * sin(
+        radians(angle_to_rotate))
+    py_rotated = (player_x - screen_width / 2) * sin(radians(angle_to_rotate)) + (player_y - screen_height / 2) * cos(
+        radians(angle_to_rotate))
+    px_rotated = px_rotated + screen_width / 2
+    py_rotated = py_rotated + screen_height / 2
+    return px_rotated, py_rotated
 
 
 def cast_rays():
-    global px, py, pa
     ra = pa - fov / 2
     number_of_rays = 200
     dra = fov / number_of_rays
+    px_rotated, py_rotated = return_rotated_player_position(px, py, -90)
     for i in range(0, number_of_rays):
         if ra < 0:
             ra = ra + 2 * pi
         if ra > 2 * pi:
             ra = ra - 2 * pi
-        x_step = 0
-        y_step = 0
-        player_tile_pos_y = int(py / map_s)
-        player_tile_pos_x = int(px / map_s)
-
-        if 0 < ra < pi:
-            y_step = 1
-        if pi < ra < 2 * pi:
-            y_step = -1
-        if 0 <= ra < 0.5 * pi or 1.5 * pi < ra <= 2 * pi:
-            x_step = 1
-        if 0.5 * pi < ra < 1.5 * pi:
-            x_step = -1
 
         # horizontal check - green ray
-        grdx, grdy, grh = 0, 0, 0
-        if x_step != 0:
-            reverse = 0
-            if x_step == -1:
-                reverse = 1
-
-            if x_step == 1:
-                grdx = (player_tile_pos_x + x_step) * map_s - px
-            elif x_step == -1:
-                grdx = player_tile_pos_x * map_s - px
-
-            while True:
-                grdy = grdx * tan(ra)
-                grh = sqrt(grdx ** 2 + grdy ** 2)
-                if 0 < int((py + grdy)) < screen_height:
-                    if level_map[int((py + grdy - reverse) / map_s)][int((px + grdx - reverse) / map_s)] == 1:
-                        break
-                else:
-                    break
-                grdx += x_step * map_s
-        else:
-            grh = inf
+        horizontal_ray_len = check_ray_length(ra, px, py, level_map)
 
         # vertical check -- yellow ray
-        yrdx, yrdy, yrh = 0, 0, 0
-        if y_step != 0:
-            reverse = 0
-            if y_step == -1:
-                reverse = 1
+        ra_rotated = ra - radians(90)
+        if ra_rotated < 0:
+            ra_rotated = ra_rotated + 2 * pi
+        if ra_rotated > 2 * pi:
+            ra_rotated = ra_rotated - 2 * pi
 
-            if y_step == 1:
-                yrdy = (player_tile_pos_y + y_step) * map_s - py
-            elif y_step == -1:
-                yrdy = player_tile_pos_y * map_s - py
+        vertical_rey_len = check_ray_length(ra_rotated, px_rotated, py_rotated, level_map_rotated)
 
-            while True:
-                yrdx = yrdy * 1 / tan(ra)
-                yrh = sqrt(yrdx ** 2 + yrdy ** 2)
-                if 0 < int((px + yrdx)) < screen_width:
-                    if level_map[int((py + yrdy - reverse) / map_s)][int((px + yrdx - reverse) / map_s)] == 1:
-                        break
-                else:
-                    break
-                yrdy += y_step * map_s
-        else:
-            yrh = inf
-
-
-
-        if grh < yrh:
+        if horizontal_ray_len < vertical_rey_len:
             wall_color = wall_color_horizontal
-            canvas.create_line(px, py, px + grdx, py + grdy, fill=wall_color)
-            wall_dist = grh
+            wall_dist = horizontal_ray_len
         else:
             wall_color = wall_color_vertical
-            canvas.create_line(px, py, px + yrdx, py + yrdy, fill=wall_color)
-            wall_dist = yrh
+            wall_dist = vertical_rey_len
 
+        # fish eye effect correction
         ca = pa - ra
         if ca < 0:
             ca += 2 * pi
         if ca >= 2 * pi:
             ca -= 2 * pi
-        wall_dist = wall_dist * cos(ca)  # fish eye effect correction
+        wall_dist = wall_dist * cos(ca)
         line_height = screen_height * map_s / wall_dist
 
+        # calculating ray position on the screen
         screen_dx = wall_dist * tan(fov / 2) - wall_dist * tan(ca)
         a = screen_dx / (2 * wall_dist * tan(fov / 2))
+
+        # calculating next ray position in order to fill the gap
         screen_position_x = screen_3d_offset_x + a * screen_width
         next_screen_position_x = screen_position_x
         if i < number_of_rays:
@@ -204,6 +210,7 @@ def cast_rays():
 
         if line_height > screen_height:
             line_height = screen_height
+
         canvas.create_rectangle(screen_position_x, screen_3d_offset_y - 0.5 * line_height, next_screen_position_x,
                                 screen_3d_offset_y + 0.5 * line_height, fill=wall_color, width=0)
 
@@ -213,6 +220,7 @@ def cast_rays():
 def loop():
     update()
     render_view()
+
     window.after(12, loop)
 
 
