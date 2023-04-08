@@ -53,7 +53,7 @@ wall_color_vertical = rgb_to_hex((200, 0, 0))
 ceiling_color = rgb_to_hex((56, 56, 56))
 floor_color = rgb_to_hex((117, 115, 116))
 player_input = ""
-player_movement_increment = 4
+player_speed = 4
 window = Tk()
 window.title("Raycast Engine")
 canvas = Canvas(window, height=screen_height, width=screen_width * 2)
@@ -71,10 +71,10 @@ def update():
     global player_input
     global dpx
     global dpy
-    dpx = player_movement_increment * cos(pa)
-    dpy = player_movement_increment * sin(pa)
-    dpx90 = player_movement_increment * cos(pa + 0.5 * pi)
-    dpy90 = player_movement_increment * sin(pa + 0.5 * pi)
+    dpx = player_speed * cos(pa)
+    dpy = player_speed * sin(pa)
+    dpx90 = player_speed * cos(pa + 0.5 * pi)
+    dpy90 = player_speed * sin(pa + 0.5 * pi)
     if player_input == "w":
         px += dpx
         py += dpy
