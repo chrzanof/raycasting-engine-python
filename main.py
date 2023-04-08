@@ -12,6 +12,16 @@ def return_rotated_matrix(matrix):
     return t
 
 
+def rgb_to_hex(rgb):
+    return "#" + '%02x%02x%02x' % rgb
+
+
+def hex_to_rgb(value):
+    value = value.lstrip('#')
+    lv = len(value)
+    return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+
+
 level_map = [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 1, 0, 0, 1],
@@ -38,8 +48,10 @@ dpa = 0.1
 fov = radians(60)
 dpx = 0
 dpy = 0
-wall_color_horizontal = "#19fa21"
-wall_color_vertical = "#0fb014"
+wall_color_horizontal = rgb_to_hex((255, 0, 0))
+wall_color_vertical = rgb_to_hex((200, 0, 0))
+ceiling_color = rgb_to_hex((56, 56, 56))
+floor_color = rgb_to_hex((117, 115, 116))
 player_input = ""
 player_movement_increment = 4
 window = Tk()
@@ -96,8 +108,8 @@ def render_view():
 
 def draw_map(level, cv):
     cv.delete("all")
-    cv.create_rectangle(0, 0, screen_width * 2, screen_height, fill="grey", width=0)
-    cv.create_rectangle(screen_width, 0, screen_width * 2, screen_height / 2, fill="#00FFFF", width=0)
+    cv.create_rectangle(0, 0, screen_width * 2, screen_height, fill=floor_color, width=0)
+    cv.create_rectangle(screen_width, 0, screen_width * 2, screen_height / 2, fill=ceiling_color, width=0)
     for x in range(0, map_y):
         for y in range(0, map_x):
             x0 = x * map_s
@@ -211,6 +223,12 @@ def cast_rays():
         if line_height > screen_height:
             line_height = screen_height
 
+        color_scale_dist = 1 - min(wall_dist / (16 * map_s), 1)
+        r, g, b = hex_to_rgb(wall_color)
+        r = int(r * color_scale_dist)
+        g = int(g * color_scale_dist)
+        b = int(b * color_scale_dist)
+        wall_color = rgb_to_hex((r, g, b))
         canvas.create_rectangle(screen_position_x, screen_3d_offset_y - 0.5 * line_height, next_screen_position_x,
                                 screen_3d_offset_y + 0.5 * line_height, fill=wall_color, width=0)
 
