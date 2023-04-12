@@ -20,10 +20,13 @@ class GameEngine:
         self.projectiles = []
         self.sprites = []
         self.actors = []
-        self.inputHandler = InputHandler(window)
+        self.inputHandler = InputHandler(window, player)
 
     def update(self):
-        pass
+        command_buffer = self.inputHandler.handle_input()
+        for command in command_buffer:
+            command.actor = self.player
+            command.execute()
 
     def render(self, canvas):
         self.level.render(canvas)

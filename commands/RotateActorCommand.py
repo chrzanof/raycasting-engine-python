@@ -4,9 +4,9 @@ from objects.Actor import Actor
 
 class RotateActorCommand(Command):
 
-    def __init__(self, actor: Actor, dest_angle: float):
+    def __init__(self, actor: Actor, d_angle: float):
         self.actor = actor
-        self.dest_angle = dest_angle
+        self.d_angle = d_angle
 
-    def execute(self, actor):
-        actor.rotate_to(self.dest_angle)
+    def execute(self):
+        self.actor.rotate_to(self.actor.angle + self.d_angle)

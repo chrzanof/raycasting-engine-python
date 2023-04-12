@@ -5,10 +5,10 @@ from objects.Actor import Actor
 
 class MoveActorCommand(Command):
 
-    def __init__(self, actor: Actor, dest_x: int, dest_y: int):
+    def __init__(self, actor: Actor, dx: float, dy: float):
         self.actor = actor
-        self.dest_x = dest_x
-        self.dest_y = dest_y
+        self.dx = dx
+        self.dy = dy
 
-    def execute(self, actor):
-        actor.move_to(self.dest_x, self.dest_y)
+    def execute(self):
+        self.actor.move_to(self.actor.x + self.dx, self.actor.y + self.dy)
