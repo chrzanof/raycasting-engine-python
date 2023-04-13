@@ -1,13 +1,10 @@
 import math
-from settings import *
 
 
 def return_rotated_matrix(matrix):
-    t = [[0 for col in range(len(matrix[row]))] for row in range(len(matrix))]
-    for i in range(0, len(matrix)):
-        for j in range(0, len(matrix[i])):
-            t[len(matrix) - 1 - j][i] = matrix[i][j]
-    return t
+    transpose_matrix = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
+    rotated_matrix = [row for row in transpose_matrix[::-1]]
+    return rotated_matrix
 
 
 def rgb_to_hex(rgb):

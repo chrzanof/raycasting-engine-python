@@ -2,6 +2,7 @@ from utils import *
 from math import *
 
 
+from settings import *
 class RaycastingEngine:
     def __init__(self, width, height, level, player):
         self.width = width
@@ -52,7 +53,7 @@ class RaycastingEngine:
             if ca >= 2 * pi:
                 ca -= 2 * pi
             wall_dist = wall_dist * cos(ca)
-            line_height = SCREEN_HEIGHT / wall_dist
+            line_height = SCREEN_WIDTH / wall_dist
 
             # calculating ray position on the screen
             screen_dx = wall_dist * tan(self.player.fov / 2) - wall_dist * tan(ca)

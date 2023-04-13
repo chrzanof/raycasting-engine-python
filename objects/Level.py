@@ -15,8 +15,8 @@ class Level:
 
     def render(self, canvas):
 
-        for x in range(0, len(self.level_map)):
-            for y in range(0, len(self.level_map[x])):
+        for y in range(0, len(self.level_map)):
+            for x in range(0, len(self.level_map[y])):
                 x0 = x * self.map_tile_size
                 y0 = y * self.map_tile_size
                 color = "black"
