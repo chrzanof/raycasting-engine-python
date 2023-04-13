@@ -10,5 +10,5 @@ class Player(Actor):
     def render(self, canvas, map_tile_size):
         canvas.create_oval(self.x * map_tile_size - 2, self.y * map_tile_size - 2, self.x * map_tile_size + 2, self.y * map_tile_size + 2, fill="yellow")
         canvas.create_line(self.x * map_tile_size, self.y * map_tile_size, self.x * map_tile_size + 4 * math.cos(self.angle), self.y * map_tile_size + 4 * math.sin(self.angle),
-                           fill="yellow", width=3)
+                           fill="green", width=3)
         return canvas

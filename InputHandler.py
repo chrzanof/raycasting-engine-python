@@ -2,6 +2,7 @@ import math
 
 from commands.MoveActorCommand import MoveActorCommand
 from commands.RotateActorCommand import RotateActorCommand
+from commands.ZoomCommand import ZoomCommand
 
 
 class InputHandler:
@@ -43,5 +44,11 @@ class InputHandler:
             command_buffer.append(RotateActorCommand(self.actor, -self.actor.rotation_speed))
         if 'e' in self.input_buffer:
             command_buffer.append(RotateActorCommand(self.actor, self.actor.rotation_speed))
+        if 'Up' in self.input_buffer:
+            command_buffer.append(ZoomCommand(self.actor, -0.01))
+            print(math.degrees(self.actor.fov))
+        if 'Down' in self.input_buffer:
+            command_buffer.append(ZoomCommand(self.actor, 0.01))
+            print(math.degrees(self.actor.fov))
 
         return command_buffer

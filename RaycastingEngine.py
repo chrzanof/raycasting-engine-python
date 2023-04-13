@@ -53,8 +53,13 @@ class RaycastingEngine:
             if ca >= 2 * pi:
                 ca -= 2 * pi
             wall_dist = wall_dist * cos(ca)
-            line_height = SCREEN_WIDTH / wall_dist
+            ratio = SCREEN_HEIGHT / SCREEN_WIDTH
+            angle_vertical = self.player.fov * atan(ratio)
 
+            line_scale = 1 / (wall_dist * tan(angle_vertical))
+            # line_height = SCREEN_HEIGHT / wall_dist
+            # line_height = line_height - line_height/SCREEN_PROPORTION_Y
+            line_height = SCREEN_HEIGHT * line_scale
             # calculating ray position on the screen
             screen_dx = wall_dist * tan(self.player.fov / 2) - wall_dist * tan(ca)
             a = screen_dx / (2 * wall_dist * tan(self.player.fov / 2))

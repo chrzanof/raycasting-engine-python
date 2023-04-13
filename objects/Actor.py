@@ -23,3 +23,4 @@ class Actor(GameObject):
     def rotate_to(self, angle):
         self.angle = angle
 
+
