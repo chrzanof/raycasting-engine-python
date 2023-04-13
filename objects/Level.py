@@ -1,6 +1,10 @@
+from utils import return_rotated_matrix
+
+
 class Level:
     def __init__(self, level_map, screen_height, screen_width):
         self.level_map = level_map
+        self.level_map_rotated = return_rotated_matrix(self.level_map)
         self.map_tile_size = min(int(screen_height / len(self.level_map)), int(screen_width / len(self.level_map[0])))
 
     def load_from_file(self, file_path):

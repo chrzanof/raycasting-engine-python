@@ -2,24 +2,7 @@ import time
 from tkinter import *
 from datetime import datetime
 from math import *
-
-
-def return_rotated_matrix(matrix):
-    t = [[0 for col in range(len(matrix[row]))] for row in range(len(matrix))]
-    for i in range(0, len(matrix)):
-        for j in range(0, len(matrix[i])):
-            t[len(matrix) - 1 - j][i] = matrix[i][j]
-    return t
-
-
-def rgb_to_hex(rgb):
-    return "#" + '%02x%02x%02x' % rgb
-
-
-def hex_to_rgb(value):
-    value = value.lstrip('#')
-    lv = len(value)
-    return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+from utils import *
 
 
 level_map = [
@@ -173,7 +156,7 @@ def cast_rays():
     ra = pa - fov / 2
     number_of_rays = 200
     dra = fov / number_of_rays
-    px_rotated, py_rotated = return_rotated_player_position(px, py, -90)
+    px_rotated, py_rotated = return_rotated_actor_position(px, py, -90)
     for i in range(0, number_of_rays):
         if ra < 0:
             ra = ra + 2 * pi
