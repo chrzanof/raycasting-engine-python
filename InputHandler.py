@@ -21,6 +21,7 @@ class InputHandler:
     def keydown(self, e):
         if e.keysym not in self.input_buffer:
             self.input_buffer.append(e.keysym)
+            # print(e.keysym)
 
     def handle_input(self):
         dpx = self.actor.speed * math.cos(self.actor.angle)
@@ -44,11 +45,10 @@ class InputHandler:
             command_buffer.append(RotateActorCommand(self.actor, -self.actor.rotation_speed))
         if 'e' in self.input_buffer:
             command_buffer.append(RotateActorCommand(self.actor, self.actor.rotation_speed))
-        if 'Up' in self.input_buffer:
+        if 'plus' in self.input_buffer:
             command_buffer.append(ZoomCommand(self.actor, -0.01))
-            print(math.degrees(self.actor.fov))
-        if 'Down' in self.input_buffer:
+
+        if 'minus' in self.input_buffer:
             command_buffer.append(ZoomCommand(self.actor, 0.01))
-            print(math.degrees(self.actor.fov))
 
         return command_buffer

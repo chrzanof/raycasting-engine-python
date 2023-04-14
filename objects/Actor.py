@@ -1,4 +1,7 @@
+import math
+
 from objects.GameObject import GameObject
+from settings import *
 
 
 class Actor(GameObject):
@@ -15,6 +18,7 @@ class Actor(GameObject):
         self.speed = speed
         self.rotation_speed = rotation_speed
         self.fov = fov
+        self.fov_vertical = self.fov * math.atan(SCREEN_HEIGHT / SCREEN_WIDTH)
 
     def move_to(self, x, y):
         self.x = x
