@@ -58,7 +58,7 @@ class RaycastingEngine:
                 ca -= 2 * pi
             wall_dist = wall_dist * cos(ca)
 
-            line_scale = 1 / (wall_dist * tan(self.player.fov_vertical))  # TODO different tile heights
+            line_scale = 1 / (wall_dist * tan(self.player.fov_vertical))
             # line_height = SCREEN_HEIGHT / wall_dist
             # line_height = line_height - line_height/SCREEN_PROPORTION_Y
             line_height = SCREEN_HEIGHT * line_scale
@@ -77,13 +77,15 @@ class RaycastingEngine:
             if line_height > SCREEN_HEIGHT:
                 line_height = SCREEN_HEIGHT
 
-            color_scale_dist = 1 - min(wall_dist / 16, 1)  # TODO actor max vision distance parameter
+            color_scale_dist = 1 - min(wall_dist / self.player.vision_distance, 1)
             r, g, b = hex_to_rgb(wall_color)
             r = int(r * color_scale_dist)
             g = int(g * color_scale_dist)
             b = int(b * color_scale_dist)
             wall_color = rgb_to_hex((r, g, b))
-            canvas.create_rectangle(screen_position_x, LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
+
+            canvas.create_rectangle(screen_position_x,
+                                    LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
                                     next_screen_position_x,
                                     LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
                                     fill=wall_color, width=0)

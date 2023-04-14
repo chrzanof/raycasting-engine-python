@@ -14,7 +14,9 @@ player = Player(PLAYER_X0,
                 math.radians(PLAYER_ANGLE0_DEGREES),
                 PLAYER_MOVEMENT_SPEED * MS_PER_FRAME / 1000,
                 math.radians(PLAYER_ROTATION_SPEED_DEGREES) * MS_PER_FRAME / 1000,
-                math.radians(FOV_DEGREES))
+                math.radians(FOV_DEGREES),
+                math.radians(PLAYER_VERTICAL_ANGLE0_DEGREES),
+                PLAYER_MAX_VISION_DISTANCE)
 game_engine = GameEngine(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_1_MAP, player, window)
 
 

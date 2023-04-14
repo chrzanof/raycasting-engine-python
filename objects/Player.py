@@ -4,8 +4,8 @@ from objects.Actor import Actor
 
 
 class Player(Actor):
-    def __init__(self, x, y, angle, speed, rotation_speed, fov):
-        super().__init__(x, y, angle, speed, rotation_speed, fov)
+    def __init__(self, x, y, angle, speed, rotation_speed, fov, vertical_angle, vision_distance):
+        super().__init__(x, y, angle, speed, rotation_speed, fov, vertical_angle, vision_distance)
 
     def render(self, canvas, map_tile_size):
         canvas.create_oval(self.x * map_tile_size - 2, self.y * map_tile_size - 2, self.x * map_tile_size + 2,
