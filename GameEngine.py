@@ -1,6 +1,7 @@
 from InputHandler import InputHandler
 from objects.Level import Level
 from RaycastingEngine import RaycastingEngine
+from objects.Texture import Texture
 
 
 class GameEngine:
@@ -9,13 +10,17 @@ class GameEngine:
         self.height = height
         self.level = Level(level_map, height / 8, width / 8)
         self.player = player
-        self.raycasting_engine = RaycastingEngine(width, height, self.level, self.player)
+
         self.enemies = []
         self.npcs = []
         self.projectiles = []
         self.sprites = []
         self.actors = []
         self.inputHandler = InputHandler(window, player)
+        self.textures = []
+        self.textures.append(Texture("textures/stone_wall1.ppm"))
+
+        self.raycasting_engine = RaycastingEngine(width, height, self.level, self.player, self.textures)
 
     def update(self):
         command_buffer = self.inputHandler.handle_input()
@@ -27,4 +32,5 @@ class GameEngine:
         self.raycasting_engine.render(canvas)
         self.level.render(canvas)
         self.player.render(canvas, self.level.map_tile_size)
+        # self.textures[0].render(canvas)
         return canvas

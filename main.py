@@ -1,3 +1,4 @@
+from objects.Texture import Texture
 from settings import *
 import tkinter as tk
 from objects.Player import Player
@@ -30,4 +31,3 @@ def game_loop():
 
 window.after(MS_PER_FRAME, game_loop)
 window.mainloop()
-

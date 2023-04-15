@@ -5,11 +5,12 @@ from settings import *
 
 
 class RaycastingEngine:
-    def __init__(self, width, height, level, player):
+    def __init__(self, width, height, level, player, textures):
         self.width = width
         self.height = height
         self.level = level
         self.player = player
+        self.textures = textures
 
     def render(self, canvas):
         canvas.create_rectangle(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, fill=rgb_to_hex(FLOOR_COLOR_RGB),
@@ -114,7 +115,7 @@ class RaycastingEngine:
                 ray_length = sqrt(ray_dx ** 2 + ray_dy ** 2)
                 max_x = len(level)
                 if 0 < int((player_y + ray_dy)) < max_x:
-                    if level[int(player_y + ray_dy - reverse)][int(player_x + ray_dx - reverse)] == 1:
+                    if level[int(player_y + ray_dy - reverse)][int(player_x + ray_dx - reverse)] > 0:
                         break
                 else:
                     break
