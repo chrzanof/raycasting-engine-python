@@ -20,7 +20,7 @@ class Level:
                 x0 = x * self.map_tile_size
                 y0 = y * self.map_tile_size
                 color = "black"
-                if self.level_map[y][x] == 1:
+                if self.level_map[y][x] > 0:
                     color = "white"
                 canvas.create_rectangle(x0, y0, x0 + self.map_tile_size, y0 + self.map_tile_size, fill=color, width=0)
         return canvas

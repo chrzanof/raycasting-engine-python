@@ -30,8 +30,9 @@ class RaycastingEngine:
                 ra = ra - 2 * math.pi
 
             # horizontal check - green ray
-            horizontal_ray_len, hit_point_xh, hit_point_yh = self.check_ray_length(ra, self.player.x, self.player.y,
-                                                                                   self.level.level_map)
+            horizontal_ray_len, hit_point_xh, hit_point_yh, texture_index_h = self.check_ray_length(ra, self.player.x,
+                                                                                                    self.player.y,
+                                                                                                    self.level.level_map)
 
             # vertical check -- yellow ray
             ra_rotated = ra - radians(90)
@@ -43,17 +44,21 @@ class RaycastingEngine:
             px_rotated, py_rotated = return_rotated_actor_position(self.player.x, self.player.y, -90,
                                                                    len(self.level.level_map),
                                                                    len(self.level.level_map[0]))
-            vertical_rey_len, hit_point_xv, hit_point_yv = self.check_ray_length(ra_rotated, px_rotated, py_rotated,
-                                                                                 self.level.level_map_rotated)
+            vertical_rey_len, hit_point_xv, hit_point_yv, texture_index_v = self.check_ray_length(ra_rotated,
+                                                                                                  px_rotated,
+                                                                                                  py_rotated,
+                                                                                                  self.level.level_map_rotated)
 
             if horizontal_ray_len < vertical_rey_len:
-                wall_color = rgb_to_hex(HORIZONTAL_WALL_COLOR_RGB)
+                # wall_color = rgb_to_hex(HORIZONTAL_WALL_COLOR_RGB)
                 wall_dist = horizontal_ray_len
                 hit_point_y = hit_point_yh
+                texture_index = texture_index_h
             else:
-                wall_color = rgb_to_hex(VERTICAL_WALL_COLOR_RGB)
+                # wall_color = rgb_to_hex(VERTICAL_WALL_COLOR_RGB)
                 wall_dist = vertical_rey_len
                 hit_point_y = hit_point_yv
+                texture_index = texture_index_v
 
             # fish eye effect correction
             ca = self.player.angle - ra
@@ -90,12 +95,12 @@ class RaycastingEngine:
             #                         next_screen_position_x,
             #                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
             #                         fill=wall_color, width=0)
-            texture_col = int((hit_point_y - int(hit_point_y)) * len(self.textures[0].rgb_array))
+            texture_col = int((hit_point_y - int(hit_point_y)) * len(self.textures[texture_index].rgb_array))
 
-            for i in range(len(self.textures[0].rgb_array)):
-                r = int(self.textures[0].rgb_array[i][texture_col][0] * color_scale_dist)
-                g = int(self.textures[0].rgb_array[i][texture_col][1] * color_scale_dist)
-                b = int(self.textures[0].rgb_array[i][texture_col][2] * color_scale_dist)
+            for i in range(len(self.textures[texture_index].rgb_array)):
+                r = int(self.textures[texture_index].rgb_array[i][texture_col][0] * color_scale_dist)
+                g = int(self.textures[texture_index].rgb_array[i][texture_col][1] * color_scale_dist)
+                b = int(self.textures[texture_index].rgb_array[i][texture_col][2] * color_scale_dist)
                 color = rgb_to_hex((r, g, b))
                 canvas.create_rectangle(
                     screen_position_x,
@@ -115,6 +120,7 @@ class RaycastingEngine:
         step = 0
         ray_dx = 0
         ray_dy = 0
+        texture_index = 0
         if 0 <= ray_angle < 0.5 * pi or 1.5 * pi < ray_angle <= 2 * pi:
             step = 1
         if 0.5 * pi < ray_angle < 1.5 * pi:
@@ -133,6 +139,7 @@ class RaycastingEngine:
                 max_x = len(level)
                 if 0 < int((player_y + ray_dy)) < max_x:
                     if level[int(player_y + ray_dy - reverse)][int(player_x + ray_dx - reverse)] > 0:
+                        texture_index = level[int(player_y + ray_dy - reverse)][int(player_x + ray_dx - reverse)] - 1
                         break
                 else:
                     break
@@ -141,4 +148,4 @@ class RaycastingEngine:
             ray_length = inf
         hit_point_x = player_x + ray_dx
         hit_point_y = player_y + ray_dy
-        return ray_length, hit_point_x, hit_point_y
+        return ray_length, hit_point_x, hit_point_y, texture_index
