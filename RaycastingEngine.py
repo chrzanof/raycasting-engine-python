@@ -30,7 +30,8 @@ class RaycastingEngine:
                 ra = ra - 2 * math.pi
 
             # horizontal check - green ray
-            horizontal_ray_len = self.check_ray_length(ra, self.player.x, self.player.y, self.level.level_map)
+            horizontal_ray_len, h_ray_dx, h_ray_dy = self.check_ray_length(ra, self.player.x, self.player.y,
+                                                                       self.level.level_map)
 
             # vertical check -- yellow ray
             ra_rotated = ra - radians(90)
@@ -42,14 +43,19 @@ class RaycastingEngine:
             px_rotated, py_rotated = return_rotated_actor_position(self.player.x, self.player.y, -90,
                                                                    len(self.level.level_map),
                                                                    len(self.level.level_map[0]))
-            vertical_rey_len = self.check_ray_length(ra_rotated, px_rotated, py_rotated, self.level.level_map_rotated)
+            vertical_rey_len, v_ray_dx, v_ray_dy = self.check_ray_length(ra_rotated, px_rotated, py_rotated,
+                                                                     self.level.level_map_rotated)
 
             if horizontal_ray_len < vertical_rey_len:
                 wall_color = rgb_to_hex(HORIZONTAL_WALL_COLOR_RGB)
                 wall_dist = horizontal_ray_len
+                ray_dx = h_ray_dx
+                ray_dy = h_ray_dy
             else:
                 wall_color = rgb_to_hex(VERTICAL_WALL_COLOR_RGB)
                 wall_dist = vertical_rey_len
+                ray_dx = v_ray_dx
+                ray_dy = v_ray_dy
 
             # fish eye effect correction
             ca = self.player.angle - ra
@@ -75,21 +81,36 @@ class RaycastingEngine:
                 a_next = screen_dx_next / (2 * wall_dist * tan(self.player.fov / 2))
                 next_screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a_next * SCREEN_WIDTH
 
-            if line_height > SCREEN_HEIGHT:
-                line_height = SCREEN_HEIGHT
+
 
             color_scale_dist = 1 - min(wall_dist / self.player.vision_distance, 1)
-            r, g, b = hex_to_rgb(wall_color)
-            r = int(r * color_scale_dist)
-            g = int(g * color_scale_dist)
-            b = int(b * color_scale_dist)
-            wall_color = rgb_to_hex((r, g, b))
+            # r, g, b = hex_to_rgb(wall_color)
+            # r = int(r * color_scale_dist)
+            # g = int(g * color_scale_dist)
+            # b = int(b * color_scale_dist)
+            # wall_color = rgb_to_hex((r, g, b))
 
-            canvas.create_rectangle(screen_position_x,
-                                    LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
-                                    next_screen_position_x,
-                                    LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
-                                    fill=wall_color, width=0)
+            # canvas.create_rectangle(screen_position_x,
+            #                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
+            #                         next_screen_position_x,
+            #                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
+            #                         fill=wall_color, width=0)
+            texture_col = int((self.player.y - ray_dy - int(self.player.y - ray_dy)) * len(self.textures[0].rgb_array))
+
+            for i in range(len(self.textures[0].rgb_array)):
+                r = self.textures[0].rgb_array[i][texture_col][0]
+                g = self.textures[0].rgb_array[i][texture_col][1]
+                b = self.textures[0].rgb_array[i][texture_col][2]
+                color = rgb_to_hex((r, g, b))
+                canvas.create_rectangle(
+                    screen_position_x,
+                    LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
+                        self.textures[0].rgb_array),
+                    next_screen_position_x,
+                    LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (i + 1) * line_height / len(
+                        self.textures[0].rgb_array),
+                    fill=color, width=0
+                )
 
             ra = ra + dra
 
@@ -98,6 +119,7 @@ class RaycastingEngine:
         reverse = 0
         step = 0
         ray_dx = 0
+        ray_dy = 0
         if 0 <= ray_angle < 0.5 * pi or 1.5 * pi < ray_angle <= 2 * pi:
             step = 1
         if 0.5 * pi < ray_angle < 1.5 * pi:
@@ -122,4 +144,5 @@ class RaycastingEngine:
                 ray_dx += step
         else:
             ray_length = inf
-        return ray_length
+
+        return ray_length, ray_dx, ray_dy
