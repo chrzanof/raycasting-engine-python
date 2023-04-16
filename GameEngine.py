@@ -36,5 +36,4 @@ class GameEngine:
         self.raycasting_engine.render(canvas)
         self.level.render(canvas)
         self.player.render(canvas, self.level.map_tile_size)
-        # self.textures[0].render(canvas)
         return canvas

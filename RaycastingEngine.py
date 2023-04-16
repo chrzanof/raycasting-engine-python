@@ -83,11 +83,13 @@ class RaycastingEngine:
                 a_next = screen_dx_next / (2 * wall_dist * tan(self.player.fov / 2))
                 next_screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a_next * SCREEN_WIDTH
 
-            scale_dist = max(0.5 * wall_dist, 1)
+            #  drawing line
+            scale_dist = int(max(0.5 * wall_dist, 1))
             color_scale_dist = 1 - min(wall_dist / self.player.vision_distance, 1)
             texture_col = int((hit_point_y - int(hit_point_y)) * len(self.textures[texture_index].rgb_array))
-            if wall_dist < self.player.vision_distance:
-                for i in range(0, len(self.textures[texture_index].rgb_array), int(scale_dist)):
+
+            if wall_dist < self.player.vision_distance and RENDER_TEXTURES:
+                for i in range(0, len(self.textures[texture_index].rgb_array), scale_dist):
                     r = int(self.textures[texture_index].rgb_array[i][texture_col][0] * color_scale_dist)
                     g = int(self.textures[texture_index].rgb_array[i][texture_col][1] * color_scale_dist)
                     b = int(self.textures[texture_index].rgb_array[i][texture_col][2] * color_scale_dist)
@@ -97,7 +99,7 @@ class RaycastingEngine:
                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
                             self.textures[0].rgb_array),
                         next_screen_position_x,
-                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (i + int(scale_dist)) * line_height / len(
+                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (i + scale_dist) * line_height / len(
                             self.textures[0].rgb_array),
                         fill=color, width=0
                     )
