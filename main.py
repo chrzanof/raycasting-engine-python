@@ -4,6 +4,7 @@ import tkinter as tk
 from objects.Player import Player
 import math
 from GameEngine import GameEngine
+import time
 
 window = tk.Tk()
 window.title("Raycaster")
@@ -22,12 +23,19 @@ game_engine = GameEngine(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_1_MAP, player, windo
 
 
 def game_loop():
-    global canvas
+    global canvas, previous_time, current_time
+    previous_time = current_time
+    current_time = time.time()
+    elapsed_time = current_time - previous_time
+    fps = int(1 / elapsed_time)
+    window.title("Raycaster       FPS - " + str(fps))
     game_engine.update()
     canvas.delete("all")
     canvas = game_engine.render(canvas)
     window.after(MS_PER_FRAME, game_loop)  # 60 fps
 
 
+previous_time = 0
+current_time = 0
 window.after(MS_PER_FRAME, game_loop)
 window.mainloop()

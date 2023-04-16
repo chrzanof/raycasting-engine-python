@@ -18,11 +18,11 @@ class GameEngine:
         self.actors = []
         self.inputHandler = InputHandler(window, player)
         self.textures = []
-        self.textures.append(Texture("textures/stone_wall1.ppm"))
-        self.textures.append(Texture("textures/stone_wall_2.ppm"))
-        self.textures.append(Texture("textures/wooden_wall.ppm"))
-        self.textures.append(Texture("textures/red_brick_wall.ppm"))
-        self.textures.append(Texture("textures/metal_door.ppm"))
+        self.textures.append(Texture("textures/stone_wall32x32_1.ppm"))
+        self.textures.append(Texture("textures/stone_wall32x32_2.ppm"))
+        self.textures.append(Texture("textures/wooden_wall32x32.ppm"))
+        self.textures.append(Texture("textures/red_brick_wall32x32.ppm"))
+        self.textures.append(Texture("textures/metal_door32x32.ppm"))
 
         self.raycasting_engine = RaycastingEngine(width, height, self.level, self.player, self.textures)
 

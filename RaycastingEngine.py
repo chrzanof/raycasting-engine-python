@@ -50,12 +50,12 @@ class RaycastingEngine:
                                                                                                   self.level.level_map_rotated)
 
             if horizontal_ray_len < vertical_rey_len:
-                # wall_color = rgb_to_hex(HORIZONTAL_WALL_COLOR_RGB)
+                wall_color = rgb_to_hex(HORIZONTAL_WALL_COLOR_RGB)
                 wall_dist = horizontal_ray_len
                 hit_point_y = hit_point_yh
                 texture_index = texture_index_h
             else:
-                # wall_color = rgb_to_hex(VERTICAL_WALL_COLOR_RGB)
+                wall_color = rgb_to_hex(VERTICAL_WALL_COLOR_RGB)
                 wall_dist = vertical_rey_len
                 hit_point_y = hit_point_yv
                 texture_index = texture_index_v
@@ -83,35 +83,36 @@ class RaycastingEngine:
                 a_next = screen_dx_next / (2 * wall_dist * tan(self.player.fov / 2))
                 next_screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a_next * SCREEN_WIDTH
 
+            scale_dist = max(0.5 * wall_dist, 1)
             color_scale_dist = 1 - min(wall_dist / self.player.vision_distance, 1)
-            # r, g, b = hex_to_rgb(wall_color)
-            # r = int(r * color_scale_dist)
-            # g = int(g * color_scale_dist)
-            # b = int(b * color_scale_dist)
-            # wall_color = rgb_to_hex((r, g, b))
-
-            # canvas.create_rectangle(screen_position_x,
-            #                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
-            #                         next_screen_position_x,
-            #                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
-            #                         fill=wall_color, width=0)
             texture_col = int((hit_point_y - int(hit_point_y)) * len(self.textures[texture_index].rgb_array))
+            if wall_dist < self.player.vision_distance:
+                for i in range(0, len(self.textures[texture_index].rgb_array), int(scale_dist)):
+                    r = int(self.textures[texture_index].rgb_array[i][texture_col][0] * color_scale_dist)
+                    g = int(self.textures[texture_index].rgb_array[i][texture_col][1] * color_scale_dist)
+                    b = int(self.textures[texture_index].rgb_array[i][texture_col][2] * color_scale_dist)
+                    color = rgb_to_hex((r, g, b))
+                    canvas.create_rectangle(
+                        screen_position_x,
+                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
+                            self.textures[0].rgb_array),
+                        next_screen_position_x,
+                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (i + int(scale_dist)) * line_height / len(
+                            self.textures[0].rgb_array),
+                        fill=color, width=0
+                    )
+            else:
+                r, g, b = hex_to_rgb(wall_color)
+                r = int(r * color_scale_dist)
+                g = int(g * color_scale_dist)
+                b = int(b * color_scale_dist)
+                wall_color = rgb_to_hex((r, g, b))
 
-            for i in range(len(self.textures[texture_index].rgb_array)):
-                r = int(self.textures[texture_index].rgb_array[i][texture_col][0] * color_scale_dist)
-                g = int(self.textures[texture_index].rgb_array[i][texture_col][1] * color_scale_dist)
-                b = int(self.textures[texture_index].rgb_array[i][texture_col][2] * color_scale_dist)
-                color = rgb_to_hex((r, g, b))
-                canvas.create_rectangle(
-                    screen_position_x,
-                    LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
-                        self.textures[0].rgb_array),
-                    next_screen_position_x,
-                    LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (i + 1) * line_height / len(
-                        self.textures[0].rgb_array),
-                    fill=color, width=0
-                )
-
+                canvas.create_rectangle(screen_position_x,
+                                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
+                                        next_screen_position_x,
+                                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
+                                        fill=wall_color, width=0)
             ra = ra + dra
 
     def check_ray_length(self, ray_angle, player_x, player_y, level):
