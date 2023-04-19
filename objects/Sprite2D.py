@@ -10,5 +10,5 @@ class Sprite2D(GameObject):
     def update(self, dt):
         pass
 
-    def render(self, surface):
+    def render(self, canvas):
         pass

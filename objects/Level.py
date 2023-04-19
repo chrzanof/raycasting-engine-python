@@ -10,9 +10,6 @@ class Level:
     def load_from_file(self, file_path):
         pass
 
-    def get_tile(self, x, y):
-        pass
-
     def render(self, canvas):
 
         for y in range(0, len(self.level_map)):

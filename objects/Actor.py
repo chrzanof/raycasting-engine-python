@@ -5,10 +5,10 @@ from settings import *
 
 
 class Actor(GameObject):
-    def update(self, dt):
+    def update(self):
         pass
 
-    def render(self, surface):
+    def render(self, canvas):
         pass
 
     def __init__(self, x, y, angle, speed, rotation_speed, fov, vertical_angle, vision_distance):

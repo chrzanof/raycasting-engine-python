@@ -5,7 +5,7 @@ class Projectile(GameObject):
     def update(self, dt):
         pass
 
-    def render(self, surface):
+    def render(self, canvas):
         pass
 
     def __init__(self, x, y, angle, speed):

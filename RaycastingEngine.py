@@ -29,12 +29,12 @@ class RaycastingEngine:
             if ra > 2 * math.pi:
                 ra = ra - 2 * math.pi
 
-            # horizontal check - green ray
-            horizontal_ray_len, hit_point_xh, hit_point_yh, texture_index_h = self.check_ray_length(ra, self.player.x,
-                                                                                                    self.player.y,
-                                                                                                    self.level.level_map)
+            # horizontal check
+            horizontal_ray_len, hit_point_xh, hit_point_yh, texture_index_h = self.check_ray_collision(ra, self.player.x,
+                                                                                                       self.player.y,
+                                                                                                       self.level.level_map)
 
-            # vertical check -- yellow ray
+            # vertical check
             ra_rotated = ra - radians(90)
             if ra_rotated < 0:
                 ra_rotated = ra_rotated + 2 * pi
@@ -44,10 +44,10 @@ class RaycastingEngine:
             px_rotated, py_rotated = return_rotated_actor_position(self.player.x, self.player.y, -90,
                                                                    len(self.level.level_map),
                                                                    len(self.level.level_map[0]))
-            vertical_rey_len, hit_point_xv, hit_point_yv, texture_index_v = self.check_ray_length(ra_rotated,
-                                                                                                  px_rotated,
-                                                                                                  py_rotated,
-                                                                                                  self.level.level_map_rotated)
+            vertical_rey_len, hit_point_xv, hit_point_yv, texture_index_v = self.check_ray_collision(ra_rotated,
+                                                                                                     px_rotated,
+                                                                                                     py_rotated,
+                                                                                                     self.level.level_map_rotated)
 
             if horizontal_ray_len < vertical_rey_len:
                 wall_color = rgb_to_hex(HORIZONTAL_WALL_COLOR_RGB)
@@ -87,7 +87,7 @@ class RaycastingEngine:
             scale_dist = int(max(0.5 * wall_dist, 1))
             color_scale_dist = 1 - min(wall_dist / self.player.vision_distance, 1)
             texture_col = int((hit_point_y - int(hit_point_y)) * len(self.textures[texture_index].rgb_array))
-
+            # with textures
             if wall_dist < self.player.vision_distance and RENDER_TEXTURES:
                 for i in range(0, len(self.textures[texture_index].rgb_array), scale_dist):
                     r = int(self.textures[texture_index].rgb_array[i][texture_col][0] * color_scale_dist)
@@ -117,7 +117,7 @@ class RaycastingEngine:
                                         fill=wall_color, width=0)
             ra = ra + dra
 
-    def check_ray_length(self, ray_angle, player_x, player_y, level):
+    def check_ray_collision(self, ray_angle, player_x, player_y, level):
 
         reverse = 0
         step = 0

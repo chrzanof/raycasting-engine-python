@@ -3,9 +3,9 @@ from abc import ABC, abstractmethod
 
 class GameObject(ABC):
     @abstractmethod
-    def update(self, dt):
+    def update(self):
         pass
 
     @abstractmethod
-    def render(self, surface):
+    def render(self, canvas):
         pass
