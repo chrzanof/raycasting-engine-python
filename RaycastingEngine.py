@@ -50,11 +50,13 @@ class RaycastingEngine:
                                                                                                      self.level.level_map_rotated)
 
             if horizontal_ray_len < vertical_rey_len:
+                horizontal = True
                 wall_color = rgb_to_hex(HORIZONTAL_WALL_COLOR_RGB)
                 wall_dist = horizontal_ray_len
                 hit_point_y = hit_point_yh
                 texture_index = texture_index_h
             else:
+                horizontal = False
                 wall_color = rgb_to_hex(VERTICAL_WALL_COLOR_RGB)
                 wall_dist = vertical_rey_len
                 hit_point_y = hit_point_yv
@@ -86,21 +88,32 @@ class RaycastingEngine:
             #  drawing line
             scale_dist = int(max(0.5 * wall_dist, 1))
             color_scale_dist = 1 - min(wall_dist / self.player.vision_distance, 1)
-            texture_col = int((hit_point_y - int(hit_point_y)) * len(self.textures[texture_index].rgb_array))
+            texture = self.textures[texture_index]
+            if not horizontal:
+                if ra > math.radians(180):
+                    texture_array = texture.rgb_array_reversed
+                else:
+                    texture_array = texture.rgb_array
+            else:
+                if math.radians(270) > ra > math.radians(90):
+                    texture_array = texture.rgb_array_reversed
+                else:
+                    texture_array = texture.rgb_array
+            texture_col = int(abs((hit_point_y - int(hit_point_y))) * len(texture_array))
             # with textures
             if wall_dist < self.player.vision_distance and RENDER_TEXTURES:
-                for i in range(0, len(self.textures[texture_index].rgb_array), scale_dist):
-                    r = int(self.textures[texture_index].rgb_array[i][texture_col][0] * color_scale_dist)
-                    g = int(self.textures[texture_index].rgb_array[i][texture_col][1] * color_scale_dist)
-                    b = int(self.textures[texture_index].rgb_array[i][texture_col][2] * color_scale_dist)
+                for i in range(0, len(texture.rgb_array), scale_dist):
+                    r = int(texture_array[i][texture_col][0] * color_scale_dist)
+                    g = int(texture_array[i][texture_col][1] * color_scale_dist)
+                    b = int(texture_array[i][texture_col][2] * color_scale_dist)
                     color = rgb_to_hex((r, g, b))
                     canvas.create_rectangle(
                         screen_position_x,
                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
-                            self.textures[0].rgb_array),
+                            texture.rgb_array),
                         next_screen_position_x,
                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (i + scale_dist) * line_height / len(
-                            self.textures[0].rgb_array),
+                            texture.rgb_array),
                         fill=color, width=0
                     )
             else:
