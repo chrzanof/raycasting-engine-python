@@ -5,19 +5,40 @@ from settings import *
 
 
 class RaycastingEngine:
-    def __init__(self, width, height, level, player, textures):
+    def __init__(self, width, height, level, player, textures, sprites):
         self.width = width
         self.height = height
         self.level = level
         self.player = player
         self.textures = textures
+        self.sprites = sprites
 
     def render(self, canvas):
         canvas.create_rectangle(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, fill=rgb_to_hex(FLOOR_COLOR_RGB),
                                 width=0)
         canvas.create_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, fill=rgb_to_hex(CEILING_COLOR_RGB), width=0)
         self.cast_rays(canvas)
+        self.sprites = sorted(self.sprites,
+                              key=lambda s: sqrt((self.player.x - s.x) ** 2 + (self.player.y - s.y) ** 2),
+                              reverse=True)
+        for sprite in self.sprites:
+            x, width, height = self.calculate_sprite_screen_position_and_height(sprite)
+
+            sprite.render(canvas, x, self.height / 2, width, height)
+
         return canvas
+
+    def calculate_sprite_screen_position_and_height(self, sprite):
+        theta = atan((sprite.y - self.player.y) / (sprite.x - self.player.x))
+        beta = self.player.angle - theta
+        distance = sqrt((self.player.x - sprite.x) ** 2 + (self.player.y - sprite.y) ** 2)
+        scale_h = 1 / (distance * tan(self.player.fov_vertical))
+        height = SCREEN_HEIGHT * scale_h
+        width = SCREEN_WIDTH * scale_h
+        screen_dx = distance * tan(self.player.fov / 2) - distance * tan(beta)
+        a = screen_dx / (2 * distance * tan(self.player.fov / 2))
+        screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a * SCREEN_WIDTH
+        return screen_position_x, int(width), int(height)
 
     def cast_rays(self, canvas):
         ra = self.player.angle - self.player.fov / 2
@@ -30,7 +51,8 @@ class RaycastingEngine:
                 ra = ra - 2 * math.pi
 
             # horizontal check
-            horizontal_ray_len, hit_point_xh, hit_point_yh, texture_index_h = self.check_ray_collision(ra, self.player.x,
+            horizontal_ray_len, hit_point_xh, hit_point_yh, texture_index_h = self.check_ray_collision(ra,
+                                                                                                       self.player.x,
                                                                                                        self.player.y,
                                                                                                        self.level.level_map)
 
@@ -76,9 +98,9 @@ class RaycastingEngine:
             # calculating ray position on the screen
             screen_dx = wall_dist * tan(self.player.fov / 2) - wall_dist * tan(ca)
             a = screen_dx / (2 * wall_dist * tan(self.player.fov / 2))
+            screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a * SCREEN_WIDTH
 
             # calculating next ray position in order to fill the gap
-            screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a * SCREEN_WIDTH
             next_screen_position_x = screen_position_x
             if i < NUMBER_OF_RAYS:
                 screen_dx_next = wall_dist * tan(self.player.fov / 2) - wall_dist * tan(ca - dra)
@@ -112,7 +134,8 @@ class RaycastingEngine:
                         LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
                             texture.rgb_array),
                         next_screen_position_x,
-                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (i + scale_dist) * line_height / len(
+                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (
+                                i + scale_dist) * line_height / len(
                             texture.rgb_array),
                         fill=color, width=0
                     )
