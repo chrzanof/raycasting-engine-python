@@ -26,15 +26,16 @@ class GameEngine:
         self.textures.append(Texture("textures/red_brick_wall32x32.ppm"))
         self.textures.append(Texture("textures/metal_door32x32.ppm"))
 
-        self.sprites.append(Sprite2D(6, 6, "sprites/static/pillar.png"))
-        self.sprites.append(Sprite2D(7, 6, "sprites/static/pillar.png"))
-        self.sprites.append(Sprite2D(6, 7, "sprites/static/pillar.png"))
-        self.sprites.append(Sprite2D(7, 7, "sprites/static/pillar.png"))
-        self.sprites.append(Sprite2D(8.5, 8.5, "sprites/static/barrel.png"))
-        self.sprites.append(Sprite2D(8.5, 8, "sprites/static/barrel.png"))
-        self.sprites.append(Sprite2D(4, 1.5, "sprites/static/barrel.png"))
-        self.sprites.append(Sprite2D(8.5, 8.5, "sprites/static/lamp.png"))
-        self.sprites.append(Sprite2D(9, 9, "sprites/static/lamp.png"))
+        self.sprites.append(Sprite2D(2, 1.5, 0.5, "sprites/static/pillar.png"))
+        self.sprites.append(Sprite2D(2.75, 1.5, 0.5, "sprites/static/pillar.png"))
+        self.sprites.append(Sprite2D(3.5, 1.5, 0.5, "sprites/static/pillar.png"))
+        self.sprites.append(Sprite2D(4.25, 1.5, 0.5, "sprites/static/pillar.png"))
+
+        self.sprites.append(Sprite2D(8.5, 8.5, 0.5, "sprites/static/barrel.png"))
+        self.sprites.append(Sprite2D(9, 9, 0.5, "sprites/static/barrel.png"))
+        self.sprites.append(Sprite2D(4.75, 1.5, 0.5, "sprites/static/barrel.png"))
+
+        self.sprites.append(Sprite2D(9, 9, 0.5, "sprites/static/lamp.png"))
 
         self.raycasting_engine = RaycastingEngine(width, height, self.level, self.player, self.textures, self.sprites)
 

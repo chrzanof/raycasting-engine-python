@@ -22,13 +22,13 @@ class RaycastingEngine:
                               key=lambda s: sqrt((self.player.x - s.x) ** 2 + (self.player.y - s.y) ** 2),
                               reverse=True)
         for sprite in self.sprites:
-            x, width, height, render = self.calculate_sprite_screen_position_and_height(sprite)
+            x, width, height, brightness, render = self.calculate_sprite_screen_parameters(sprite)
             if render:
-                sprite.render(canvas, x, self.height / 2, width, height)
+                sprite.render(canvas, x, self.height / 2, width, height, brightness)
 
         return canvas
 
-    def calculate_sprite_screen_position_and_height(self, sprite):
+    def calculate_sprite_screen_parameters(self, sprite):
         theta = math.atan2((sprite.y - self.player.y), (sprite.x - self.player.x))
         beta = self.player.angle - theta
         if beta < 0:
@@ -40,6 +40,10 @@ class RaycastingEngine:
         if self.player.fov < beta < 2 * math.pi - self.player.fov:
             render = False
         distance = sqrt((self.player.x - sprite.x) ** 2 + (self.player.y - sprite.y) ** 2)
+        distance = distance * cos(beta)
+        if distance < sprite.radius:
+            render = False
+        brightness_scale = 1 - min(distance / self.player.vision_distance, 1)
         scale_h = 1 / (distance * tan(self.player.fov_vertical))
         height = SCREEN_HEIGHT * scale_h
         width = SCREEN_WIDTH * scale_h
@@ -47,7 +51,7 @@ class RaycastingEngine:
         a = screen_dx / (2 * distance * tan(self.player.fov / 2))
         screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a * SCREEN_WIDTH
 
-        return screen_position_x, int(width), int(height), render
+        return screen_position_x, int(width), int(height), brightness_scale, render
 
     def cast_rays(self, canvas):
         ra = self.player.angle - self.player.fov / 2
@@ -63,7 +67,8 @@ class RaycastingEngine:
             horizontal_ray_len, hit_point_xh, hit_point_yh, texture_index_h = self.check_ray_collision(ra,
                                                                                                        self.player.x,
                                                                                                        self.player.y,
-                                                                                                       self.level.level_map)
+                                                                                                       self.level
+                                                                                                       .level_map)
 
             # vertical check
             ra_rotated = ra - radians(90)
@@ -92,7 +97,7 @@ class RaycastingEngine:
                 wall_dist = vertical_rey_len
                 hit_point_y = hit_point_yv
                 texture_index = texture_index_v
-
+            # TODO sorting stripes by distance reversed
             # fish eye effect correction
             ca = self.player.angle - ra
             if ca < 0:
