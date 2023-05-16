@@ -22,15 +22,23 @@ class RaycastingEngine:
                               key=lambda s: sqrt((self.player.x - s.x) ** 2 + (self.player.y - s.y) ** 2),
                               reverse=True)
         for sprite in self.sprites:
-            x, width, height = self.calculate_sprite_screen_position_and_height(sprite)
-
-            sprite.render(canvas, x, self.height / 2, width, height)
+            x, width, height, render = self.calculate_sprite_screen_position_and_height(sprite)
+            if render:
+                sprite.render(canvas, x, self.height / 2, width, height)
 
         return canvas
 
     def calculate_sprite_screen_position_and_height(self, sprite):
-        theta = atan((sprite.y - self.player.y) / (sprite.x - self.player.x))
+        theta = math.atan2((sprite.y - self.player.y), (sprite.x - self.player.x))
         beta = self.player.angle - theta
+        if beta < 0:
+            beta = beta + 2 * math.pi
+        if beta >= 2 * math.pi:
+            beta = beta - 2 * math.pi
+
+        render = True
+        if self.player.fov < beta < 2 * math.pi - self.player.fov:
+            render = False
         distance = sqrt((self.player.x - sprite.x) ** 2 + (self.player.y - sprite.y) ** 2)
         scale_h = 1 / (distance * tan(self.player.fov_vertical))
         height = SCREEN_HEIGHT * scale_h
@@ -38,7 +46,8 @@ class RaycastingEngine:
         screen_dx = distance * tan(self.player.fov / 2) - distance * tan(beta)
         a = screen_dx / (2 * distance * tan(self.player.fov / 2))
         screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a * SCREEN_WIDTH
-        return screen_position_x, int(width), int(height)
+
+        return screen_position_x, int(width), int(height), render
 
     def cast_rays(self, canvas):
         ra = self.player.angle - self.player.fov / 2
