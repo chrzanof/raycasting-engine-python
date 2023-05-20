@@ -1,3 +1,4 @@
+from TextureStripe import TextureStripe
 from utils import *
 from math import *
 
@@ -17,7 +18,10 @@ class RaycastingEngine:
         canvas.create_rectangle(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, fill=rgb_to_hex(FLOOR_COLOR_RGB),
                                 width=0)
         canvas.create_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, fill=rgb_to_hex(CEILING_COLOR_RGB), width=0)
-        self.cast_rays(canvas)
+
+        render_buffer = self.cast_rays(canvas)
+        for obj in render_buffer:
+            obj.render(canvas)
         self.sprites = sorted(self.sprites,
                               key=lambda s: sqrt((self.player.x - s.x) ** 2 + (self.player.y - s.y) ** 2),
                               reverse=True)
@@ -54,6 +58,7 @@ class RaycastingEngine:
         return screen_position_x, int(width), int(height), brightness_scale, render
 
     def cast_rays(self, canvas):
+        texture_stripes = []
         ra = self.player.angle - self.player.fov / 2
         dra = self.player.fov / NUMBER_OF_RAYS
 
@@ -136,6 +141,8 @@ class RaycastingEngine:
                 else:
                     texture_array = texture.rgb_array
             texture_col = int(abs((hit_point_y - int(hit_point_y))) * len(texture_array))
+
+            segments_list = []
             # with textures
             if wall_dist < self.player.vision_distance and RENDER_TEXTURES:
                 for i in range(0, len(texture.rgb_array), scale_dist):
@@ -143,16 +150,17 @@ class RaycastingEngine:
                     g = int(texture_array[i][texture_col][1] * color_scale_dist)
                     b = int(texture_array[i][texture_col][2] * color_scale_dist)
                     color = rgb_to_hex((r, g, b))
-                    canvas.create_rectangle(
-                        screen_position_x,
-                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
-                            texture.rgb_array),
-                        next_screen_position_x,
-                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (
-                                i + scale_dist) * line_height / len(
-                            texture.rgb_array),
-                        fill=color, width=0
-                    )
+
+                    segment = (screen_position_x,
+                               LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + i * line_height / len(
+                                   texture.rgb_array),
+                               next_screen_position_x,
+                               LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height + (
+                                           i + scale_dist) * line_height / len(texture.rgb_array),
+                               color,
+                               0)
+                    segments_list.append(segment)
+
             else:
                 r, g, b = hex_to_rgb(wall_color)
                 r = int(r * color_scale_dist)
@@ -160,12 +168,18 @@ class RaycastingEngine:
                 b = int(b * color_scale_dist)
                 wall_color = rgb_to_hex((r, g, b))
 
-                canvas.create_rectangle(screen_position_x,
-                                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
-                                        next_screen_position_x,
-                                        LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
-                                        fill=wall_color, width=0)
+                segment = (screen_position_x,
+                           LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 - 0.5 * line_height,
+                           next_screen_position_x,
+                           LEVEL_SCREEN_MARGIN_TOP + SCREEN_HEIGHT / 2 + 0.5 * line_height,
+                           wall_color,
+                           0)
+                segments_list.append(segment)
+
+            texture_stripe = TextureStripe(segments_list)
+            texture_stripes.append(texture_stripe)
             ra = ra + dra
+        return texture_stripes
 
     def check_ray_collision(self, ray_angle, player_x, player_y, level):
 
