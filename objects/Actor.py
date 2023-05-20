@@ -4,6 +4,7 @@ from objects.GameObject import GameObject
 from settings import *
 
 
+# TODO actor collision with walls and other things
 class Actor(GameObject):
     def update(self):
         pass
@@ -32,5 +33,3 @@ class Actor(GameObject):
             self.angle = self.angle - 2 * math.pi
         elif self.angle < 0:
             self.angle = self.angle + 2 * math.pi
-
-

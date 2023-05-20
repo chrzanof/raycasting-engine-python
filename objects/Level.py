@@ -1,6 +1,7 @@
 from utils import return_rotated_matrix
 
 
+# TODO opening doors
 class Level:
     def __init__(self, level_map, screen_height, screen_width):
         self.level_map = level_map

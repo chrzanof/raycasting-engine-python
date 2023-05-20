@@ -3,6 +3,7 @@ from PIL import Image, ImageTk, ImageEnhance
 import tkinter as tk
 
 
+# TODO directional sprite
 class Sprite2D(GameObject):
     def __init__(self, x, y, radius, image_path):
         self.x = x

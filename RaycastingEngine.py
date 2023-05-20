@@ -25,7 +25,6 @@ class RaycastingEngine:
         for sprite in self.sprites:
             screen_x, width, height, brightness, isVisible, distance = self.calculate_sprite_screen_parameters(sprite)
             params = (sprite,
-                      distance,
                       isVisible,
                       (screen_x, self.height/2, width, height, brightness))
             sprite_render = SpriteRender(params)
@@ -107,7 +106,7 @@ class RaycastingEngine:
                 wall_dist = vertical_rey_len
                 hit_point_y = hit_point_yv
                 texture_index = texture_index_v
-            # TODO sorting stripes by distance reversed
+
             # fish eye effect correction
             ca = self.player.angle - ra
             if ca < 0:

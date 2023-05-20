@@ -3,6 +3,7 @@ import math
 from objects.Actor import Actor
 
 
+# TODO weapons
 class Player(Actor):
     def __init__(self, x, y, angle, speed, rotation_speed, fov, vertical_angle, vision_distance):
         super().__init__(x, y, angle, speed, rotation_speed, fov, vertical_angle, vision_distance)
