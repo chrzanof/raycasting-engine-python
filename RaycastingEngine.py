@@ -1,3 +1,4 @@
+from SpriteRender import SpriteRender
 from TextureStripe import TextureStripe
 from utils import *
 from math import *
@@ -20,15 +21,19 @@ class RaycastingEngine:
         canvas.create_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, fill=rgb_to_hex(CEILING_COLOR_RGB), width=0)
 
         render_buffer = self.cast_rays(canvas)
-        for obj in render_buffer:
-            obj.render(canvas)
-        self.sprites = sorted(self.sprites,
-                              key=lambda s: sqrt((self.player.x - s.x) ** 2 + (self.player.y - s.y) ** 2),
-                              reverse=True)
+
         for sprite in self.sprites:
-            x, width, height, brightness, render = self.calculate_sprite_screen_parameters(sprite)
-            if render:
-                sprite.render(canvas, x, self.height / 2, width, height, brightness)
+            screen_x, width, height, brightness, isVisible, distance = self.calculate_sprite_screen_parameters(sprite)
+            params = (sprite,
+                      distance,
+                      isVisible,
+                      (screen_x, self.height/2, width, height, brightness))
+            sprite_render = SpriteRender(params)
+            render_buffer.append((sprite_render, distance))
+
+        render_buffer = sorted(render_buffer, key=lambda o: o[1], reverse=True)
+        for obj in render_buffer:
+            obj[0].render(canvas)
 
         return canvas
 
@@ -55,7 +60,7 @@ class RaycastingEngine:
         a = screen_dx / (2 * distance * tan(self.player.fov / 2))
         screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a * SCREEN_WIDTH
 
-        return screen_position_x, int(width), int(height), brightness_scale, render
+        return screen_position_x, int(width), int(height), brightness_scale, render, distance
 
     def cast_rays(self, canvas):
         texture_stripes = []
@@ -177,7 +182,7 @@ class RaycastingEngine:
                 segments_list.append(segment)
 
             texture_stripe = TextureStripe(segments_list)
-            texture_stripes.append(texture_stripe)
+            texture_stripes.append((texture_stripe, wall_dist, True))
             ra = ra + dra
         return texture_stripes
 
