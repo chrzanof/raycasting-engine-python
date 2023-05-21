@@ -5,7 +5,6 @@ from objects.Player import Player
 import math
 from GameEngine import GameEngine
 import time
-
 window = tk.Tk()
 window.title("Raycaster")
 canvas = tk.Canvas(window, width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
