@@ -21,13 +21,14 @@ class GameEngine:
         self.sprites = []
         self.actors = []
         self.inputHandler = InputHandler(window, player)
-        self.textures = []
 
-        self.textures.append(Texture("textures/stone_wall32x32_1.ppm"))
-        self.textures.append(Texture("textures/stone_wall32x32_2.ppm"))
-        self.textures.append(Texture("textures/wooden_wall32x32.ppm"))
-        self.textures.append(Texture("textures/red_brick_wall32x32.ppm"))
-        self.textures.append(Texture("textures/metal_door32x32.ppm"))
+        self.textures = {
+            1: Texture("textures/stone_wall32x32_1.ppm"),
+            2: Texture("textures/stone_wall32x32_2.ppm"),
+            3: Texture("textures/wooden_wall32x32.ppm"),
+            4: Texture("textures/red_brick_wall32x32.ppm"),
+            5: Texture("textures/metal_door32x32.ppm")
+        }
 
         self.sprites.append(Sprite2D(10, 10, 0.5, "sprites/static/pillar.png"))
         self.sprites.append(Sprite2D(8, 8, 0.5, "sprites/static/pillar.png"))
@@ -67,6 +68,8 @@ class GameEngine:
 
         for sprite in self.sprites:
             sprite.update(self.player.x, self.player.y, self.player.angle)
+
+        self.level.update(self.player.x, self.player.y, self.player.angle)
 
     def render(self, canvas):
         self.raycasting_engine.render(canvas)

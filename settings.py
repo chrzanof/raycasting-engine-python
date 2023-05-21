@@ -21,6 +21,7 @@ FLOOR_COLOR_RGB = (117, 115, 116)
 HORIZONTAL_WALL_COLOR_RGB = (255, 0, 0)
 VERTICAL_WALL_COLOR_RGB = (200, 0, 0)
 MS_PER_FRAME = 16
+DOOR_INDEX = 5
 LEVEL_1_MAP = [
     [1, 1, 1, 1, 1, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1],

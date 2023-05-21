@@ -133,7 +133,7 @@ class RaycastingEngine:
             #  drawing line
             scale_dist = int(max(0.5 * wall_dist, 1))
             color_scale_dist = 1 - min(wall_dist / self.player.vision_distance, 1)
-            texture = self.textures[texture_index]
+            texture = self.textures.get(texture_index)
             if not horizontal:
                 if ra > math.radians(180):
                     texture_array = texture.rgb_array_reversed
@@ -210,7 +210,7 @@ class RaycastingEngine:
                 max_x = len(level)
                 if 0 < int((player_y + ray_dy)) < max_x:
                     if level[int(player_y + ray_dy - reverse)][int(player_x + ray_dx - reverse)] > 0:
-                        texture_index = level[int(player_y + ray_dy - reverse)][int(player_x + ray_dx - reverse)] - 1
+                        texture_index = level[int(player_y + ray_dy - reverse)][int(player_x + ray_dx - reverse)]
                         break
                 else:
                     break

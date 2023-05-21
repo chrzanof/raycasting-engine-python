@@ -1,15 +1,15 @@
+import math
+
+from settings import DOOR_INDEX
+
 from utils import return_rotated_matrix
 
 
-# TODO opening doors
 class Level:
     def __init__(self, level_map, screen_height, screen_width):
         self.level_map = level_map
         self.level_map_rotated = return_rotated_matrix(self.level_map)
         self.map_tile_size = min(int(screen_height / len(self.level_map)), int(screen_width / len(self.level_map[0])))
-
-    def load_from_file(self, file_path):
-        pass
 
     def render(self, canvas):
 
@@ -22,3 +22,12 @@ class Level:
                     color = "white"
                 canvas.create_rectangle(x0, y0, x0 + self.map_tile_size, y0 + self.map_tile_size, fill=color, width=0)
         return canvas
+
+    def update(self, player_x, player_y, player_angle):
+        # opening doors
+        vector_end_x = player_x + 0.75 * math.cos(player_angle)
+        vector_end_y = player_y + 0.75 * math.sin(player_angle)
+        if 0 <= vector_end_x < len(self.level_map) and 0 <= vector_end_y <= len(self.level_map_rotated):
+            if self.level_map[int(vector_end_y)][int(vector_end_x)] == DOOR_INDEX:
+                self.level_map[int(vector_end_y)][int(vector_end_x)] = 0
+                self.level_map_rotated = return_rotated_matrix(self.level_map)
