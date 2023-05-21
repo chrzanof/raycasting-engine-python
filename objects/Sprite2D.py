@@ -1,6 +1,6 @@
-from objects.GameObject import GameObject
 from PIL import Image, ImageTk, ImageEnhance
-import tkinter as tk
+
+from objects.GameObject import GameObject
 
 
 class Sprite2D(GameObject):

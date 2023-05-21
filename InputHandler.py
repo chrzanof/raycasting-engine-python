@@ -4,7 +4,7 @@ from commands.ChangeWeaponCommand import ChangeWeaponCommand
 from commands.MoveActorCommand import MoveActorCommand
 from commands.RotateActorCommand import RotateActorCommand
 from commands.ZoomCommand import ZoomCommand
-
+from settings import *
 
 class InputHandler:
 
@@ -22,7 +22,6 @@ class InputHandler:
     def keydown(self, e):
         if e.keysym not in self.input_buffer:
             self.input_buffer.append(e.keysym)
-            # print(e.keysym)
 
     def handle_input(self):
         dpx = self.actor.speed * math.cos(self.actor.angle)
@@ -30,33 +29,33 @@ class InputHandler:
         dpx90 = self.actor.speed * math.cos(self.actor.angle + 0.5 * math.pi)
         dpy90 = self.actor.speed * math.sin(self.actor.angle + 0.5 * math.pi)
         command_buffer = []
-        if 'w' in self.input_buffer:
+        if KEY_MOVE_UP in self.input_buffer:
             command_buffer.append(MoveActorCommand(self.actor, dpx, dpy))
-        if 'a' in self.input_buffer:
+        if KEY_MOVE_LEFT in self.input_buffer:
             command_buffer.append(MoveActorCommand(self.actor, -dpx90, -dpy90))
-        if 's' in self.input_buffer:
+        if KEY_MOVE_DOWN in self.input_buffer:
             command_buffer.append(MoveActorCommand(self.actor, -dpx, -dpy))
-        if 'd' in self.input_buffer:
+        if KEY_MOVE_RIGHT in self.input_buffer:
             command_buffer.append(MoveActorCommand(self.actor, dpx90, dpy90))
-        if 'Left' in self.input_buffer:
+        if KEY_ROTATE_LEFT1 in self.input_buffer:
             command_buffer.append(RotateActorCommand(self.actor, -self.actor.rotation_speed))
-        if 'Right' in self.input_buffer:
+        if KEY_ROTATE_RIGHT1 in self.input_buffer:
             command_buffer.append(RotateActorCommand(self.actor, self.actor.rotation_speed))
-        if 'q' in self.input_buffer:
+        if KEY_ROTATE_LEFT2 in self.input_buffer:
             command_buffer.append(RotateActorCommand(self.actor, -self.actor.rotation_speed))
-        if 'e' in self.input_buffer:
+        if KEY_ROTATE_RIGHT2 in self.input_buffer:
             command_buffer.append(RotateActorCommand(self.actor, self.actor.rotation_speed))
-        if 'plus' in self.input_buffer:
+        if KEY_ZOOM_IN in self.input_buffer:
             command_buffer.append(ZoomCommand(self.actor, -0.01))
 
-        if 'minus' in self.input_buffer:
+        if KEY_ZOOM_OUT in self.input_buffer:
             command_buffer.append(ZoomCommand(self.actor, 0.01))
 
-        if '1' in self.input_buffer:
+        if KEY_WEAPON_1 in self.input_buffer:
             command_buffer.append(ChangeWeaponCommand(self.actor, 0))
-        if '2' in self.input_buffer:
+        if KEY_WEAPON_2 in self.input_buffer:
             command_buffer.append(ChangeWeaponCommand(self.actor, 1))
-        if '3' in self.input_buffer:
+        if KEY_WEAPON_3 in self.input_buffer:
             command_buffer.append(ChangeWeaponCommand(self.actor, 2))
 
         return command_buffer

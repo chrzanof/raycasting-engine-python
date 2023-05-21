@@ -1,5 +1,5 @@
 from SpriteRender import SpriteRender
-from TextureStripe import TextureStripe
+from objects.TextureStripe import TextureStripe
 from utils import *
 from math import *
 
@@ -20,7 +20,7 @@ class RaycastingEngine:
                                 width=0)
         canvas.create_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, fill=rgb_to_hex(CEILING_COLOR_RGB), width=0)
 
-        render_buffer = self.cast_rays(canvas)
+        render_buffer = self.cast_rays()
 
         for sprite in self.sprites:
             screen_x, width, height, brightness, isVisible, distance = self.calculate_sprite_screen_parameters(sprite)
@@ -61,7 +61,7 @@ class RaycastingEngine:
 
         return screen_position_x, int(width), int(height), brightness_scale, render, distance
 
-    def cast_rays(self, canvas):
+    def cast_rays(self):
         texture_stripes = []
         ra = self.player.angle - self.player.fov / 2
         dra = self.player.fov / NUMBER_OF_RAYS
