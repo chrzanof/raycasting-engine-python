@@ -1,4 +1,5 @@
 from objects.Texture import Texture
+from objects.Weapon import Weapon
 from settings import *
 import tkinter as tk
 from objects.Player import Player
@@ -9,7 +10,9 @@ window = tk.Tk()
 window.title("Raycaster")
 canvas = tk.Canvas(window, width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
 canvas.pack()
-
+gun1 = Weapon(25, 1, False, "weapons/gun1.png")
+gun2 = Weapon(15, 4, True, "weapons/gun2.png")
+gun3 = Weapon(5, 20, True, "weapons/gun3.png")
 player = Player(PLAYER_X0,
                 PLAYER_Y0,
                 math.radians(PLAYER_ANGLE0_DEGREES),
@@ -18,7 +21,9 @@ player = Player(PLAYER_X0,
                 math.radians(FOV_DEGREES),
                 math.radians(PLAYER_VERTICAL_ANGLE0_DEGREES),
                 PLAYER_MAX_VISION_DISTANCE,
-                PLAYER_RADIUS)
+                PLAYER_RADIUS,
+                weapons=[gun1, gun2, gun3])
+
 game_engine = GameEngine(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_1_MAP, player, window)
 
 

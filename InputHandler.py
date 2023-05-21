@@ -1,5 +1,6 @@
 import math
 
+from commands.ChangeWeaponCommand import ChangeWeaponCommand
 from commands.MoveActorCommand import MoveActorCommand
 from commands.RotateActorCommand import RotateActorCommand
 from commands.ZoomCommand import ZoomCommand
@@ -50,5 +51,12 @@ class InputHandler:
 
         if 'minus' in self.input_buffer:
             command_buffer.append(ZoomCommand(self.actor, 0.01))
+
+        if '1' in self.input_buffer:
+            command_buffer.append(ChangeWeaponCommand(self.actor, 0))
+        if '2' in self.input_buffer:
+            command_buffer.append(ChangeWeaponCommand(self.actor, 1))
+        if '3' in self.input_buffer:
+            command_buffer.append(ChangeWeaponCommand(self.actor, 2))
 
         return command_buffer
