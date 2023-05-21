@@ -5,10 +5,11 @@ import tkinter as tk
 
 class Sprite2D(GameObject):
 
-    def __init__(self, x, y, radius, path):
+    def __init__(self, x, y, radius, render_radius, path):
         self.x = x
         self.y = y
         self.radius = radius
+        self.render_radius = render_radius
         self.image = Image.open(path)
         self.photoImage = None
 

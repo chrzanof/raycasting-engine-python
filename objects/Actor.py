@@ -4,7 +4,6 @@ from objects.GameObject import GameObject
 from settings import *
 
 
-# TODO actor collision with walls and other things
 class Actor(GameObject):
     def update(self):
         pass
@@ -12,11 +11,12 @@ class Actor(GameObject):
     def render(self, canvas):
         pass
 
-    def __init__(self, x, y, angle, speed, rotation_speed, fov, vertical_angle, vision_distance):
+    def __init__(self, x, y, angle, speed, rotation_speed, fov, vertical_angle, vision_distance, radius):
         self.x = x
         self.y = y
         self.angle = angle
         self.speed = speed
+        self.radius = radius
         self.rotation_speed = rotation_speed
         self.fov = fov
         self.fov_vertical = self.fov * math.atan(SCREEN_HEIGHT / SCREEN_WIDTH)

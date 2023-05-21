@@ -49,7 +49,7 @@ class RaycastingEngine:
             render = False
         distance = sqrt((self.player.x - sprite.x) ** 2 + (self.player.y - sprite.y) ** 2)
         distance = distance * cos(beta)
-        if distance < sprite.radius:
+        if distance < sprite.render_radius:
             render = False
         brightness_scale = 1 - min(distance / self.player.vision_distance, 1)
         scale_h = 1 / (distance * tan(self.player.fov_vertical))

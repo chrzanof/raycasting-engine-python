@@ -9,10 +9,11 @@ from os import listdir
 
 class DirectionalSprite(GameObject):
 
-    def __init__(self, x, y, radius, angle, folder_path):
+    def __init__(self, x, y, radius, render_radius, angle, folder_path):
         self.x = x
         self.y = y
         self.radius = radius
+        self.render_radius = render_radius
         self.images = []
         self.angle = angle
         self.load_images(folder_path)
