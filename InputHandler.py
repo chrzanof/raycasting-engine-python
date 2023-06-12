@@ -6,7 +6,9 @@ from commands.RotateActorCommand import RotateActorCommand
 from commands.ZoomCommand import ZoomCommand
 from settings import *
 
+
 class InputHandler:
+    """class for handling input from keyboard"""
 
     def __init__(self, window, actor):
         self.window = window
@@ -16,14 +18,27 @@ class InputHandler:
         self.actor = actor
 
     def keyup(self, e):
+        """
+        detects key being released and removes it from input_buffer
+        :param e: event
+        """
         if e.keysym in self.input_buffer:
             self.input_buffer.pop(self.input_buffer.index(e.keysym))
 
     def keydown(self, e):
+        """
+        detects key being pressed and adds it to input_buffer
+        :param e: event
+        """
         if e.keysym not in self.input_buffer:
             self.input_buffer.append(e.keysym)
 
     def handle_input(self):
+        """
+        this method checks which key is present in input_buffer and returns command_buffer array that contains command
+         objects
+        :return: command buffer
+        """
         dpx = self.actor.speed * math.cos(self.actor.angle)
         dpy = self.actor.speed * math.sin(self.actor.angle)
         dpx90 = self.actor.speed * math.cos(self.actor.angle + 0.5 * math.pi)

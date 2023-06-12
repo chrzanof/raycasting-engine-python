@@ -20,6 +20,9 @@ class GameEngine:
         self.raycasting_engine = RaycastingEngine(width, height, self.level, self.player, self.textures, self.sprites)
 
     def update(self):
+        """
+        executing commands, updating all entities in a game and checking collisions
+        """
         command_buffer = self.inputHandler.handle_input()
         for command in command_buffer:
             command.actor = self.player
@@ -41,6 +44,11 @@ class GameEngine:
                 command.undo()
 
     def render(self, canvas):
+        """
+        rendering all entities
+        :param canvas: canvas containing all objects on the screen
+        :return canvas:
+        """
         self.raycasting_engine.render(canvas)
         self.player.render(canvas, self.level.map_tile_size)
 

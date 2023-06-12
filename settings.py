@@ -1,3 +1,6 @@
+"""
+setting all necessary parameters and key bindings
+"""
 SCREEN_HEIGHT = 768
 SCREEN_WIDTH = 1024
 NUMBER_OF_RAYS = 200

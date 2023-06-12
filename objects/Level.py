@@ -12,7 +12,11 @@ class Level:
         self.map_tile_size = min(int(screen_height / len(self.level_map)), int(screen_width / len(self.level_map[0])))
 
     def render(self, canvas):
-
+        """
+        renders level in 2D view
+        :param canvas:
+        :return: updated canvas
+        """
         for y in range(0, len(self.level_map)):
             for x in range(0, len(self.level_map[y])):
                 x0 = x * self.map_tile_size
@@ -24,6 +28,13 @@ class Level:
         return canvas
 
     def update(self, player_x, player_y, player_angle):
+        """
+        updates all elements of the level that player can interact with. Right now only opens doors
+        :param player_x:
+        :param player_y:
+        :param player_angle:
+        :return:
+        """
         # opening doors
         vector_end_x = player_x + 0.75 * math.cos(player_angle)
         vector_end_y = player_y + 0.75 * math.sin(player_angle)

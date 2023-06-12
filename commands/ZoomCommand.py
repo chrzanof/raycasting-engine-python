@@ -15,6 +15,10 @@ class ZoomCommand(Command):
         self.fov_vertical_before = 0
 
     def execute(self):
+        """
+        zooms the view by modifying actor's vertical and horizontal field of view
+        :return:
+        """
         if math.radians(MIN_FOV_DEGREES) <= self.actor.fov + self.da <= math.radians(MAX_FOV_DEGREES):
             self.fov_before = self.actor.fov
             self.fov_vertical_before = self.actor.fov_vertical

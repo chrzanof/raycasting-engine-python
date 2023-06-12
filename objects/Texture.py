@@ -9,6 +9,7 @@ class Texture:
         self.load()
 
     def load(self):
+        """loading texture from file to the array of pixels in rgb format"""
         file = open(self.texture_path, "r")
         file.readline()
         file.readline()
@@ -41,6 +42,7 @@ class Texture:
         self.create_reversed()
 
     def create_reversed(self):
+        """reverses the texture in x dimension """
         for row in self.rgb_array:
             row_reversed = []
             for i in range(len(row) - 1, -1, -1):
@@ -48,6 +50,11 @@ class Texture:
             self.rgb_array_reversed.append(row_reversed)
 
     def render(self, canvas):
+        """
+        rendering texture in 2D view (only for testing)
+        :param canvas:
+        :return: updated canvas
+        """
         for j in range(len(self.rgb_array)):
             for i in range(len(self.rgb_array[j])):
                 r = self.rgb_array[j][i][0]

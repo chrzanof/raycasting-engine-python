@@ -10,6 +10,10 @@ class RotateActorCommand(Command):
         self.angle_before = 0
 
     def execute(self):
+        """
+        rotates actor to new angle
+        :return:
+        """
         self.actor.rotate_to(self.actor.angle + self.d_angle)
 
     def undo(self):

@@ -9,6 +9,10 @@ class ChangeWeaponCommand(Command):
         self.index_before = 0
 
     def execute(self):
+        """
+        changes weapon to a given index
+        :return:
+        """
         self.index_before = self.index
         self.player.change_weapon(self.index)
 

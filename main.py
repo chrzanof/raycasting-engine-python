@@ -8,6 +8,9 @@ from objects.Player import Player
 import math
 from GameEngine import GameEngine
 import time
+"""
+creating all objects and invoking game_loop() function
+"""
 window = tk.Tk()
 window.title("Raycaster")
 canvas = tk.Canvas(window, width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
@@ -88,6 +91,10 @@ game_engine = GameEngine(SCREEN_WIDTH, SCREEN_HEIGHT, level_1_map, player, windo
 
 
 def game_loop():
+    """
+    main loop in a game - invoking updates and rendering methods
+    FPS calculation
+    """
     global canvas, previous_time, current_time
     previous_time = current_time
     current_time = time.time()

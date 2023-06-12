@@ -15,6 +15,11 @@ class Weapon:
         pass
 
     def render(self, canvas):
+        """
+        rendering weapon on screen
+        :param canvas:
+        :return:
+        """
         image_resized = self.image.resize((SCREEN_HEIGHT, SCREEN_HEIGHT))
         self.photoImage = ImageTk.PhotoImage(image_resized)
         canvas.create_image(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, image=self.photoImage)

@@ -17,6 +17,16 @@ class Sprite2D(GameObject):
         pass
 
     def render(self, canvas, x, y, width, height, brightness):
+        """
+        rendering sprite
+        :param canvas:
+        :param x:
+        :param y:
+        :param width:
+        :param height:
+        :param brightness:
+        :return:
+        """
         image_resized = self.image.resize((width, height))
         enhancer = ImageEnhance.Brightness(image_resized)
         image_resized = enhancer.enhance(brightness)

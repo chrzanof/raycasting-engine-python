@@ -7,6 +7,7 @@ from settings import *
 
 
 class RaycastingEngine:
+    """class responsible for 3D (2.5D actually) view """
     def __init__(self, width, height, level, player, textures, sprites):
         self.width = width
         self.height = height
@@ -16,6 +17,11 @@ class RaycastingEngine:
         self.sprites = sprites
 
     def render(self, canvas):
+        """
+        rendering objects in the furthest to the nearest order
+        :param canvas: canvas
+        :return: canvas: updated canvas
+        """
         canvas.create_rectangle(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, fill=rgb_to_hex(FLOOR_COLOR_RGB),
                                 width=0)
         canvas.create_rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, fill=rgb_to_hex(CEILING_COLOR_RGB), width=0)
@@ -37,6 +43,11 @@ class RaycastingEngine:
         return canvas
 
     def calculate_sprite_screen_parameters(self, sprite):
+        """
+        calculating all parameters necessary to render sprite on screen
+        :param sprite:
+        :return: screen x coordinate, width, height, brightness modifier, isVisible, distance to player
+        """
         theta = math.atan2((sprite.y - self.player.y), (sprite.x - self.player.x))
         beta = self.player.angle - theta
         if beta < 0:
@@ -44,13 +55,13 @@ class RaycastingEngine:
         if beta >= 2 * math.pi:
             beta = beta - 2 * math.pi
 
-        render = True
+        isVisible = True
         if self.player.fov < beta < 2 * math.pi - self.player.fov:
-            render = False
+            isVisible = False
         distance = sqrt((self.player.x - sprite.x) ** 2 + (self.player.y - sprite.y) ** 2)
         distance = distance * cos(beta)
         if distance < sprite.render_radius:
-            render = False
+            isVisible = False
         brightness_scale = 1 - min(distance / self.player.vision_distance, 1)
         scale_h = 1 / (distance * tan(self.player.fov_vertical))
         height = SCREEN_HEIGHT * scale_h
@@ -59,9 +70,13 @@ class RaycastingEngine:
         a = screen_dx / (2 * distance * tan(self.player.fov / 2))
         screen_position_x = LEVEL_SCREEN_MARGIN_LEFT + a * SCREEN_WIDTH
 
-        return screen_position_x, int(width), int(height), brightness_scale, render, distance
+        return screen_position_x, int(width), int(height), brightness_scale, isVisible, distance
 
     def cast_rays(self):
+        """
+        method performing a ray casting algorithm
+        :return: array of textured stripes
+        """
         texture_stripes = []
         ra = self.player.angle - self.player.fov / 2
         dra = self.player.fov / NUMBER_OF_RAYS
@@ -186,7 +201,14 @@ class RaycastingEngine:
         return texture_stripes
 
     def check_ray_collision(self, ray_angle, player_x, player_y, level):
-
+        """
+        casting a single ray
+        :param ray_angle: angle of the ray relative to the world
+        :param player_x: player x coordinate
+        :param player_y: player y coordinate
+        :param level: level matrix - zeros represents empty space, any number higher than 0 is a texture id
+        :return: ray length, wall hit-point x coordinate, wall hit-point y coordinate, index of texture
+        """
         reverse = 0
         step = 0
         ray_dx = 0

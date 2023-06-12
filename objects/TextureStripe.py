@@ -4,6 +4,11 @@ class TextureStripe:
         self.segment_list = segments
 
     def render(self, canvas):
+        """
+        creates rectangles on canvas representing pixels of texture
+        :param canvas:
+        :return: updated canvas
+        """
         for segment in self.segment_list:
             canvas.create_rectangle(segment[0], segment[1], segment[2], segment[3], fill=segment[4], width=segment[5])
 

@@ -21,12 +21,18 @@ class DirectionalSprite(GameObject):
         self.photoImage = None
 
     def load_images(self, folder_path):
+        """
+        loading sprite images
+        :param folder_path: path to the folder containing images of sprite in 8 directions
+        :return:
+        """
         for im in os.listdir(folder_path):
             if im.endswith(".png"):
                 self.images.append(Image.open(folder_path + "/" + im))
         assert len(self.images) == 8
 
     def render(self, canvas, x, y, width, height, brightness):
+        """rendering sprite in current direction"""
         image_resized = self.image.resize((width, height))
         enhancer = ImageEnhance.Brightness(image_resized)
         image_resized = enhancer.enhance(brightness)
@@ -34,6 +40,13 @@ class DirectionalSprite(GameObject):
         canvas.create_image(x, y, image=self.photoImage)
 
     def update(self, player_x, player_y, player_angle):
+        """
+        updating sprite current direction based on angle between player facing direction and sprite facing direction
+        :param player_x: player x coordinate
+        :param player_y: player y coordinate
+        :param player_angle:
+        :return:
+        """
         beta = player_angle + math.radians(180) - self.angle
         if beta > 2 * math.pi:
             beta = beta - 2 * math.pi

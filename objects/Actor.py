@@ -28,6 +28,7 @@ class Actor(GameObject):
         self.y = y
 
     def rotate_to(self, angle):
+        """ updates angle of an actor in [0,2PI] range"""
         self.angle = angle
         if self.angle >= 2 * math.pi:
             self.angle = self.angle - 2 * math.pi

@@ -13,6 +13,10 @@ class MoveActorCommand(Command):
         self.y_before = 0
 
     def execute(self):
+        """
+        moves actor to new position
+        :return:
+        """
         self.x_before = self.actor.x
         self.y_before = self.actor.y
         self.actor.move_to(self.actor.x + self.dx, self.actor.y + self.dy)
