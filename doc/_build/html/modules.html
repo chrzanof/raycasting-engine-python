@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>raycasting-engine-python &mdash; Raycasting Engine 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GameEngine module" href="GameEngine.html" />
+    <link rel="prev" title="Welcome to Raycasting Engine’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Raycasting Engine
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">raycasting-engine-python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="GameEngine.html">GameEngine module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="InputHandler.html">InputHandler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RaycastingEngine.html">RaycastingEngine module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SpriteRender.html">SpriteRender module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html">commands package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html">objects package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html">settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Raycasting Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">raycasting-engine-python</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raycasting-engine-python">
+<h1>raycasting-engine-python<a class="headerlink" href="#raycasting-engine-python" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GameEngine.html">GameEngine module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="GameEngine.html#GameEngine.GameEngine"><code class="docutils literal notranslate"><span class="pre">GameEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="GameEngine.html#GameEngine.GameEngine.render"><code class="docutils literal notranslate"><span class="pre">GameEngine.render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="GameEngine.html#GameEngine.GameEngine.update"><code class="docutils literal notranslate"><span class="pre">GameEngine.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="InputHandler.html">InputHandler module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="InputHandler.html#InputHandler.InputHandler"><code class="docutils literal notranslate"><span class="pre">InputHandler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="InputHandler.html#InputHandler.InputHandler.handle_input"><code class="docutils literal notranslate"><span class="pre">InputHandler.handle_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="InputHandler.html#InputHandler.InputHandler.keydown"><code class="docutils literal notranslate"><span class="pre">InputHandler.keydown()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="InputHandler.html#InputHandler.InputHandler.keyup"><code class="docutils literal notranslate"><span class="pre">InputHandler.keyup()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RaycastingEngine.html">RaycastingEngine module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="RaycastingEngine.html#RaycastingEngine.RaycastingEngine"><code class="docutils literal notranslate"><span class="pre">RaycastingEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="RaycastingEngine.html#RaycastingEngine.RaycastingEngine.calculate_sprite_screen_parameters"><code class="docutils literal notranslate"><span class="pre">RaycastingEngine.calculate_sprite_screen_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RaycastingEngine.html#RaycastingEngine.RaycastingEngine.cast_rays"><code class="docutils literal notranslate"><span class="pre">RaycastingEngine.cast_rays()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RaycastingEngine.html#RaycastingEngine.RaycastingEngine.check_ray_collision"><code class="docutils literal notranslate"><span class="pre">RaycastingEngine.check_ray_collision()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RaycastingEngine.html#RaycastingEngine.RaycastingEngine.render"><code class="docutils literal notranslate"><span class="pre">RaycastingEngine.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SpriteRender.html">SpriteRender module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="SpriteRender.html#SpriteRender.SpriteRender"><code class="docutils literal notranslate"><span class="pre">SpriteRender</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="SpriteRender.html#SpriteRender.SpriteRender.render"><code class="docutils literal notranslate"><span class="pre">SpriteRender.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.ChangeWeaponCommand">commands.ChangeWeaponCommand module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#commands.ChangeWeaponCommand.ChangeWeaponCommand"><code class="docutils literal notranslate"><span class="pre">ChangeWeaponCommand</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.ChangeWeaponCommand.ChangeWeaponCommand.execute"><code class="docutils literal notranslate"><span class="pre">ChangeWeaponCommand.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.ChangeWeaponCommand.ChangeWeaponCommand.undo"><code class="docutils literal notranslate"><span class="pre">ChangeWeaponCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.Command">commands.Command module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#commands.Command.Command"><code class="docutils literal notranslate"><span class="pre">Command</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.Command.Command.execute"><code class="docutils literal notranslate"><span class="pre">Command.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.Command.Command.undo"><code class="docutils literal notranslate"><span class="pre">Command.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.MoveActorCommand">commands.MoveActorCommand module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#commands.MoveActorCommand.MoveActorCommand"><code class="docutils literal notranslate"><span class="pre">MoveActorCommand</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.MoveActorCommand.MoveActorCommand.execute"><code class="docutils literal notranslate"><span class="pre">MoveActorCommand.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.MoveActorCommand.MoveActorCommand.undo"><code class="docutils literal notranslate"><span class="pre">MoveActorCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.RotateActorCommand">commands.RotateActorCommand module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#commands.RotateActorCommand.RotateActorCommand"><code class="docutils literal notranslate"><span class="pre">RotateActorCommand</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.RotateActorCommand.RotateActorCommand.execute"><code class="docutils literal notranslate"><span class="pre">RotateActorCommand.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.RotateActorCommand.RotateActorCommand.undo"><code class="docutils literal notranslate"><span class="pre">RotateActorCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.ZoomCommand">commands.ZoomCommand module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#commands.ZoomCommand.ZoomCommand"><code class="docutils literal notranslate"><span class="pre">ZoomCommand</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.ZoomCommand.ZoomCommand.execute"><code class="docutils literal notranslate"><span class="pre">ZoomCommand.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="commands.html#commands.ZoomCommand.ZoomCommand.undo"><code class="docutils literal notranslate"><span class="pre">ZoomCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">objects package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.Actor">objects.Actor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.Actor.Actor"><code class="docutils literal notranslate"><span class="pre">Actor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Actor.Actor.move_to"><code class="docutils literal notranslate"><span class="pre">Actor.move_to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Actor.Actor.render"><code class="docutils literal notranslate"><span class="pre">Actor.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Actor.Actor.rotate_to"><code class="docutils literal notranslate"><span class="pre">Actor.rotate_to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Actor.Actor.update"><code class="docutils literal notranslate"><span class="pre">Actor.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.DirectionalSprite">objects.DirectionalSprite module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.DirectionalSprite.DirectionalSprite"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.DirectionalSprite.DirectionalSprite.load_images"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite.load_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.DirectionalSprite.DirectionalSprite.render"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.DirectionalSprite.DirectionalSprite.update"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.GameObject">objects.GameObject module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.GameObject.GameObject"><code class="docutils literal notranslate"><span class="pre">GameObject</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.GameObject.GameObject.render"><code class="docutils literal notranslate"><span class="pre">GameObject.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.GameObject.GameObject.update"><code class="docutils literal notranslate"><span class="pre">GameObject.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.Level">objects.Level module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.Level.Level"><code class="docutils literal notranslate"><span class="pre">Level</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Level.Level.render"><code class="docutils literal notranslate"><span class="pre">Level.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Level.Level.update"><code class="docutils literal notranslate"><span class="pre">Level.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.Player">objects.Player module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.Player.Player"><code class="docutils literal notranslate"><span class="pre">Player</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Player.Player.change_weapon"><code class="docutils literal notranslate"><span class="pre">Player.change_weapon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Player.Player.render"><code class="docutils literal notranslate"><span class="pre">Player.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.Sprite2D">objects.Sprite2D module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.Sprite2D.Sprite2D"><code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Sprite2D.Sprite2D.render"><code class="docutils literal notranslate"><span class="pre">Sprite2D.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Sprite2D.Sprite2D.update"><code class="docutils literal notranslate"><span class="pre">Sprite2D.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.Texture">objects.Texture module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.Texture.Texture"><code class="docutils literal notranslate"><span class="pre">Texture</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Texture.Texture.create_reversed"><code class="docutils literal notranslate"><span class="pre">Texture.create_reversed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Texture.Texture.load"><code class="docutils literal notranslate"><span class="pre">Texture.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Texture.Texture.render"><code class="docutils literal notranslate"><span class="pre">Texture.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.TextureStripe">objects.TextureStripe module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.TextureStripe.TextureStripe"><code class="docutils literal notranslate"><span class="pre">TextureStripe</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.TextureStripe.TextureStripe.render"><code class="docutils literal notranslate"><span class="pre">TextureStripe.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects.Weapon">objects.Weapon module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#objects.Weapon.Weapon"><code class="docutils literal notranslate"><span class="pre">Weapon</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Weapon.Weapon.render"><code class="docutils literal notranslate"><span class="pre">Weapon.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#objects.Weapon.Weapon.update"><code class="docutils literal notranslate"><span class="pre">Weapon.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#module-objects">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.hex_to_rgb"><code class="docutils literal notranslate"><span class="pre">hex_to_rgb()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.return_rotated_actor_position"><code class="docutils literal notranslate"><span class="pre">return_rotated_actor_position()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.return_rotated_matrix"><code class="docutils literal notranslate"><span class="pre">return_rotated_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.rgb_to_hex"><code class="docutils literal notranslate"><span class="pre">rgb_to_hex()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Raycasting Engine’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="GameEngine.html" class="btn btn-neutral float-right" title="GameEngine module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Filip Chrzanowski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

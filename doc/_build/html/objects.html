@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>objects package &mdash; Raycasting Engine 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Raycasting Engine
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">objects package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-objects.Actor">objects.Actor module</a><ul>
+<li><a class="reference internal" href="#objects.Actor.Actor"><code class="docutils literal notranslate"><span class="pre">Actor</span></code></a><ul>
+<li><a class="reference internal" href="#objects.Actor.Actor.move_to"><code class="docutils literal notranslate"><span class="pre">Actor.move_to()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Actor.Actor.render"><code class="docutils literal notranslate"><span class="pre">Actor.render()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Actor.Actor.rotate_to"><code class="docutils literal notranslate"><span class="pre">Actor.rotate_to()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Actor.Actor.update"><code class="docutils literal notranslate"><span class="pre">Actor.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.DirectionalSprite">objects.DirectionalSprite module</a><ul>
+<li><a class="reference internal" href="#objects.DirectionalSprite.DirectionalSprite"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite</span></code></a><ul>
+<li><a class="reference internal" href="#objects.DirectionalSprite.DirectionalSprite.load_images"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite.load_images()</span></code></a></li>
+<li><a class="reference internal" href="#objects.DirectionalSprite.DirectionalSprite.render"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite.render()</span></code></a></li>
+<li><a class="reference internal" href="#objects.DirectionalSprite.DirectionalSprite.update"><code class="docutils literal notranslate"><span class="pre">DirectionalSprite.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.GameObject">objects.GameObject module</a><ul>
+<li><a class="reference internal" href="#objects.GameObject.GameObject"><code class="docutils literal notranslate"><span class="pre">GameObject</span></code></a><ul>
+<li><a class="reference internal" href="#objects.GameObject.GameObject.render"><code class="docutils literal notranslate"><span class="pre">GameObject.render()</span></code></a></li>
+<li><a class="reference internal" href="#objects.GameObject.GameObject.update"><code class="docutils literal notranslate"><span class="pre">GameObject.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.Level">objects.Level module</a><ul>
+<li><a class="reference internal" href="#objects.Level.Level"><code class="docutils literal notranslate"><span class="pre">Level</span></code></a><ul>
+<li><a class="reference internal" href="#objects.Level.Level.render"><code class="docutils literal notranslate"><span class="pre">Level.render()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Level.Level.update"><code class="docutils literal notranslate"><span class="pre">Level.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.Player">objects.Player module</a><ul>
+<li><a class="reference internal" href="#objects.Player.Player"><code class="docutils literal notranslate"><span class="pre">Player</span></code></a><ul>
+<li><a class="reference internal" href="#objects.Player.Player.change_weapon"><code class="docutils literal notranslate"><span class="pre">Player.change_weapon()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Player.Player.render"><code class="docutils literal notranslate"><span class="pre">Player.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.Sprite2D">objects.Sprite2D module</a><ul>
+<li><a class="reference internal" href="#objects.Sprite2D.Sprite2D"><code class="docutils literal notranslate"><span class="pre">Sprite2D</span></code></a><ul>
+<li><a class="reference internal" href="#objects.Sprite2D.Sprite2D.render"><code class="docutils literal notranslate"><span class="pre">Sprite2D.render()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Sprite2D.Sprite2D.update"><code class="docutils literal notranslate"><span class="pre">Sprite2D.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.Texture">objects.Texture module</a><ul>
+<li><a class="reference internal" href="#objects.Texture.Texture"><code class="docutils literal notranslate"><span class="pre">Texture</span></code></a><ul>
+<li><a class="reference internal" href="#objects.Texture.Texture.create_reversed"><code class="docutils literal notranslate"><span class="pre">Texture.create_reversed()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Texture.Texture.load"><code class="docutils literal notranslate"><span class="pre">Texture.load()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Texture.Texture.render"><code class="docutils literal notranslate"><span class="pre">Texture.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.TextureStripe">objects.TextureStripe module</a><ul>
+<li><a class="reference internal" href="#objects.TextureStripe.TextureStripe"><code class="docutils literal notranslate"><span class="pre">TextureStripe</span></code></a><ul>
+<li><a class="reference internal" href="#objects.TextureStripe.TextureStripe.render"><code class="docutils literal notranslate"><span class="pre">TextureStripe.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects.Weapon">objects.Weapon module</a><ul>
+<li><a class="reference internal" href="#objects.Weapon.Weapon"><code class="docutils literal notranslate"><span class="pre">Weapon</span></code></a><ul>
+<li><a class="reference internal" href="#objects.Weapon.Weapon.render"><code class="docutils literal notranslate"><span class="pre">Weapon.render()</span></code></a></li>
+<li><a class="reference internal" href="#objects.Weapon.Weapon.update"><code class="docutils literal notranslate"><span class="pre">Weapon.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-objects">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Raycasting Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">objects package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/objects.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="objects-package">
+<h1>objects package<a class="headerlink" href="#objects-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-objects.Actor">
+<span id="objects-actor-module"></span><h2>objects.Actor module<a class="headerlink" href="#module-objects.Actor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.Actor.Actor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.Actor.</span></span><span class="sig-name descname"><span class="pre">Actor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vision_distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Actor.html#Actor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Actor.Actor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#objects.GameObject.GameObject" title="objects.GameObject.GameObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">GameObject</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Actor.Actor.move_to">
+<span class="sig-name descname"><span class="pre">move_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Actor.html#Actor.move_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Actor.Actor.move_to" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Actor.Actor.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Actor.html#Actor.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Actor.Actor.render" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Actor.Actor.rotate_to">
+<span class="sig-name descname"><span class="pre">rotate_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Actor.html#Actor.rotate_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Actor.Actor.rotate_to" title="Permalink to this definition"></a></dt>
+<dd><p>updates angle of an actor in [0,2PI] range</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Actor.Actor.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Actor.html#Actor.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Actor.Actor.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.DirectionalSprite">
+<span id="objects-directionalsprite-module"></span><h2>objects.DirectionalSprite module<a class="headerlink" href="#module-objects.DirectionalSprite" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.DirectionalSprite.DirectionalSprite">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.DirectionalSprite.</span></span><span class="sig-name descname"><span class="pre">DirectionalSprite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/DirectionalSprite.html#DirectionalSprite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.DirectionalSprite.DirectionalSprite" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#objects.GameObject.GameObject" title="objects.GameObject.GameObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">GameObject</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.DirectionalSprite.DirectionalSprite.load_images">
+<span class="sig-name descname"><span class="pre">load_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/DirectionalSprite.html#DirectionalSprite.load_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.DirectionalSprite.DirectionalSprite.load_images" title="Permalink to this definition"></a></dt>
+<dd><p>loading sprite images
+:param folder_path: path to the folder containing images of sprite in 8 directions
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.DirectionalSprite.DirectionalSprite.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brightness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/DirectionalSprite.html#DirectionalSprite.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.DirectionalSprite.DirectionalSprite.render" title="Permalink to this definition"></a></dt>
+<dd><p>rendering sprite in current direction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.DirectionalSprite.DirectionalSprite.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/DirectionalSprite.html#DirectionalSprite.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.DirectionalSprite.DirectionalSprite.update" title="Permalink to this definition"></a></dt>
+<dd><p>updating sprite current direction based on angle between player facing direction and sprite facing direction
+:param player_x: player x coordinate
+:param player_y: player y coordinate
+:param player_angle:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.GameObject">
+<span id="objects-gameobject-module"></span><h2>objects.GameObject module<a class="headerlink" href="#module-objects.GameObject" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.GameObject.GameObject">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.GameObject.</span></span><span class="sig-name descname"><span class="pre">GameObject</span></span><a class="reference internal" href="_modules/objects/GameObject.html#GameObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.GameObject.GameObject" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>abstract class for every object (entity) in a game.
+Implemented according to Update Method design pattern</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.GameObject.GameObject.render">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/GameObject.html#GameObject.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.GameObject.GameObject.render" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.GameObject.GameObject.update">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/GameObject.html#GameObject.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.GameObject.GameObject.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.Level">
+<span id="objects-level-module"></span><h2>objects.Level module<a class="headerlink" href="#module-objects.Level" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.Level.Level">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.Level.</span></span><span class="sig-name descname"><span class="pre">Level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Level.html#Level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Level.Level" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Level.Level.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Level.html#Level.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Level.Level.render" title="Permalink to this definition"></a></dt>
+<dd><p>renders level in 2D view
+:param canvas:
+:return: updated canvas</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Level.Level.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Level.html#Level.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Level.Level.update" title="Permalink to this definition"></a></dt>
+<dd><p>updates all elements of the level that player can interact with. Right now only opens doors
+:param player_x:
+:param player_y:
+:param player_angle:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.Player">
+<span id="objects-player-module"></span><h2>objects.Player module<a class="headerlink" href="#module-objects.Player" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.Player.Player">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.Player.</span></span><span class="sig-name descname"><span class="pre">Player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vision_distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weapons</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Player.html#Player"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Player.Player" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#objects.Actor.Actor" title="objects.Actor.Actor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Actor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Player.Player.change_weapon">
+<span class="sig-name descname"><span class="pre">change_weapon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Player.html#Player.change_weapon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Player.Player.change_weapon" title="Permalink to this definition"></a></dt>
+<dd><p>changes weapon
+:param index: weapon number
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Player.Player.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_tile_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Player.html#Player.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Player.Player.render" title="Permalink to this definition"></a></dt>
+<dd><p>renders selected weapon
+:param canvas:
+:param map_tile_size:
+:return: updated canvas</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.Sprite2D">
+<span id="objects-sprite2d-module"></span><h2>objects.Sprite2D module<a class="headerlink" href="#module-objects.Sprite2D" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.Sprite2D.Sprite2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.Sprite2D.</span></span><span class="sig-name descname"><span class="pre">Sprite2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Sprite2D.html#Sprite2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Sprite2D.Sprite2D" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#objects.GameObject.GameObject" title="objects.GameObject.GameObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">GameObject</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Sprite2D.Sprite2D.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brightness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Sprite2D.html#Sprite2D.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Sprite2D.Sprite2D.render" title="Permalink to this definition"></a></dt>
+<dd><p>rendering sprite
+:param canvas:
+:param x:
+:param y:
+:param width:
+:param height:
+:param brightness:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Sprite2D.Sprite2D.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Sprite2D.html#Sprite2D.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Sprite2D.Sprite2D.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.Texture">
+<span id="objects-texture-module"></span><h2>objects.Texture module<a class="headerlink" href="#module-objects.Texture" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.Texture.Texture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.Texture.</span></span><span class="sig-name descname"><span class="pre">Texture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texture_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Texture.html#Texture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Texture.Texture" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Texture.Texture.create_reversed">
+<span class="sig-name descname"><span class="pre">create_reversed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Texture.html#Texture.create_reversed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Texture.Texture.create_reversed" title="Permalink to this definition"></a></dt>
+<dd><p>reverses the texture in x dimension</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Texture.Texture.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Texture.html#Texture.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Texture.Texture.load" title="Permalink to this definition"></a></dt>
+<dd><p>loading texture from file to the array of pixels in rgb format</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Texture.Texture.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Texture.html#Texture.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Texture.Texture.render" title="Permalink to this definition"></a></dt>
+<dd><p>rendering texture in 2D view (only for testing)
+:param canvas:
+:return: updated canvas</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.TextureStripe">
+<span id="objects-texturestripe-module"></span><h2>objects.TextureStripe module<a class="headerlink" href="#module-objects.TextureStripe" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.TextureStripe.TextureStripe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.TextureStripe.</span></span><span class="sig-name descname"><span class="pre">TextureStripe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/TextureStripe.html#TextureStripe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.TextureStripe.TextureStripe" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.TextureStripe.TextureStripe.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/TextureStripe.html#TextureStripe.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.TextureStripe.TextureStripe.render" title="Permalink to this definition"></a></dt>
+<dd><p>creates rectangles on canvas representing pixels of texture
+:param canvas:
+:return: updated canvas</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects.Weapon">
+<span id="objects-weapon-module"></span><h2>objects.Weapon module<a class="headerlink" href="#module-objects.Weapon" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="objects.Weapon.Weapon">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objects.Weapon.</span></span><span class="sig-name descname"><span class="pre">Weapon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">damage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Weapon.html#Weapon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Weapon.Weapon" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Weapon.Weapon.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Weapon.html#Weapon.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Weapon.Weapon.render" title="Permalink to this definition"></a></dt>
+<dd><p>rendering weapon on screen
+:param canvas:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objects.Weapon.Weapon.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objects/Weapon.html#Weapon.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#objects.Weapon.Weapon.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-objects">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-objects" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Filip Chrzanowski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

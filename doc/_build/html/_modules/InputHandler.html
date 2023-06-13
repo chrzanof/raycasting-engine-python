@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InputHandler &mdash; Raycasting Engine 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raycasting Engine
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raycasting Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">InputHandler</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for InputHandler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">commands.ChangeWeaponCommand</span> <span class="kn">import</span> <span class="n">ChangeWeaponCommand</span>
+<span class="kn">from</span> <span class="nn">commands.MoveActorCommand</span> <span class="kn">import</span> <span class="n">MoveActorCommand</span>
+<span class="kn">from</span> <span class="nn">commands.RotateActorCommand</span> <span class="kn">import</span> <span class="n">RotateActorCommand</span>
+<span class="kn">from</span> <span class="nn">commands.ZoomCommand</span> <span class="kn">import</span> <span class="n">ZoomCommand</span>
+<span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="InputHandler"><a class="viewcode-back" href="../InputHandler.html#InputHandler.InputHandler">[docs]</a><span class="k">class</span> <span class="nc">InputHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;class for handling input from keyboard&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">actor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;KeyPress&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keydown</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;KeyRelease&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyup</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actor</span> <span class="o">=</span> <span class="n">actor</span>
+
+<div class="viewcode-block" id="InputHandler.keyup"><a class="viewcode-back" href="../InputHandler.html#InputHandler.InputHandler.keyup">[docs]</a>    <span class="k">def</span> <span class="nf">keyup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        detects key being released and removes it from input_buffer</span>
+<span class="sd">        :param e: event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">keysym</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">keysym</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="InputHandler.keydown"><a class="viewcode-back" href="../InputHandler.html#InputHandler.InputHandler.keydown">[docs]</a>    <span class="k">def</span> <span class="nf">keydown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        detects key being pressed and adds it to input_buffer</span>
+<span class="sd">        :param e: event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">keysym</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">keysym</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InputHandler.handle_input"><a class="viewcode-back" href="../InputHandler.html#InputHandler.InputHandler.handle_input">[docs]</a>    <span class="k">def</span> <span class="nf">handle_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method checks which key is present in input_buffer and returns command_buffer array that contains command</span>
+<span class="sd">         objects</span>
+<span class="sd">        :return: command buffer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dpx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">dpy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">dpx90</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">angle</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">dpy90</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">angle</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">command_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">KEY_MOVE_UP</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MoveActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="n">dpx</span><span class="p">,</span> <span class="n">dpy</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_MOVE_LEFT</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MoveActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="o">-</span><span class="n">dpx90</span><span class="p">,</span> <span class="o">-</span><span class="n">dpy90</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_MOVE_DOWN</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MoveActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="o">-</span><span class="n">dpx</span><span class="p">,</span> <span class="o">-</span><span class="n">dpy</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_MOVE_RIGHT</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MoveActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="n">dpx90</span><span class="p">,</span> <span class="n">dpy90</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_ROTATE_LEFT1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RotateActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">rotation_speed</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_ROTATE_RIGHT1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RotateActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">rotation_speed</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_ROTATE_LEFT2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RotateActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">rotation_speed</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_ROTATE_RIGHT2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RotateActorCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">rotation_speed</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_ZOOM_IN</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ZoomCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">KEY_ZOOM_OUT</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ZoomCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">KEY_WEAPON_1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ChangeWeaponCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_WEAPON_2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ChangeWeaponCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">KEY_WEAPON_3</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_buffer</span><span class="p">:</span>
+            <span class="n">command_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ChangeWeaponCommand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">command_buffer</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Filip Chrzanowski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

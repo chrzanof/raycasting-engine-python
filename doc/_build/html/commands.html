@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>commands package &mdash; Raycasting Engine 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Raycasting Engine
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">commands package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-commands.ChangeWeaponCommand">commands.ChangeWeaponCommand module</a><ul>
+<li><a class="reference internal" href="#commands.ChangeWeaponCommand.ChangeWeaponCommand"><code class="docutils literal notranslate"><span class="pre">ChangeWeaponCommand</span></code></a><ul>
+<li><a class="reference internal" href="#commands.ChangeWeaponCommand.ChangeWeaponCommand.execute"><code class="docutils literal notranslate"><span class="pre">ChangeWeaponCommand.execute()</span></code></a></li>
+<li><a class="reference internal" href="#commands.ChangeWeaponCommand.ChangeWeaponCommand.undo"><code class="docutils literal notranslate"><span class="pre">ChangeWeaponCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-commands.Command">commands.Command module</a><ul>
+<li><a class="reference internal" href="#commands.Command.Command"><code class="docutils literal notranslate"><span class="pre">Command</span></code></a><ul>
+<li><a class="reference internal" href="#commands.Command.Command.execute"><code class="docutils literal notranslate"><span class="pre">Command.execute()</span></code></a></li>
+<li><a class="reference internal" href="#commands.Command.Command.undo"><code class="docutils literal notranslate"><span class="pre">Command.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-commands.MoveActorCommand">commands.MoveActorCommand module</a><ul>
+<li><a class="reference internal" href="#commands.MoveActorCommand.MoveActorCommand"><code class="docutils literal notranslate"><span class="pre">MoveActorCommand</span></code></a><ul>
+<li><a class="reference internal" href="#commands.MoveActorCommand.MoveActorCommand.execute"><code class="docutils literal notranslate"><span class="pre">MoveActorCommand.execute()</span></code></a></li>
+<li><a class="reference internal" href="#commands.MoveActorCommand.MoveActorCommand.undo"><code class="docutils literal notranslate"><span class="pre">MoveActorCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-commands.RotateActorCommand">commands.RotateActorCommand module</a><ul>
+<li><a class="reference internal" href="#commands.RotateActorCommand.RotateActorCommand"><code class="docutils literal notranslate"><span class="pre">RotateActorCommand</span></code></a><ul>
+<li><a class="reference internal" href="#commands.RotateActorCommand.RotateActorCommand.execute"><code class="docutils literal notranslate"><span class="pre">RotateActorCommand.execute()</span></code></a></li>
+<li><a class="reference internal" href="#commands.RotateActorCommand.RotateActorCommand.undo"><code class="docutils literal notranslate"><span class="pre">RotateActorCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-commands.ZoomCommand">commands.ZoomCommand module</a><ul>
+<li><a class="reference internal" href="#commands.ZoomCommand.ZoomCommand"><code class="docutils literal notranslate"><span class="pre">ZoomCommand</span></code></a><ul>
+<li><a class="reference internal" href="#commands.ZoomCommand.ZoomCommand.execute"><code class="docutils literal notranslate"><span class="pre">ZoomCommand.execute()</span></code></a></li>
+<li><a class="reference internal" href="#commands.ZoomCommand.ZoomCommand.undo"><code class="docutils literal notranslate"><span class="pre">ZoomCommand.undo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-commands">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Raycasting Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">commands package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/commands.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="commands-package">
+<h1>commands package<a class="headerlink" href="#commands-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-commands.ChangeWeaponCommand">
+<span id="commands-changeweaponcommand-module"></span><h2>commands.ChangeWeaponCommand module<a class="headerlink" href="#module-commands.ChangeWeaponCommand" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="commands.ChangeWeaponCommand.ChangeWeaponCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">commands.ChangeWeaponCommand.</span></span><span class="sig-name descname"><span class="pre">ChangeWeaponCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="objects.html#objects.Player.Player" title="objects.Player.Player"><span class="pre">Player</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/ChangeWeaponCommand.html#ChangeWeaponCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.ChangeWeaponCommand.ChangeWeaponCommand" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#commands.Command.Command" title="commands.Command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.ChangeWeaponCommand.ChangeWeaponCommand.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/ChangeWeaponCommand.html#ChangeWeaponCommand.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.ChangeWeaponCommand.ChangeWeaponCommand.execute" title="Permalink to this definition"></a></dt>
+<dd><p>changes weapon to a given index
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.ChangeWeaponCommand.ChangeWeaponCommand.undo">
+<span class="sig-name descname"><span class="pre">undo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/ChangeWeaponCommand.html#ChangeWeaponCommand.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.ChangeWeaponCommand.ChangeWeaponCommand.undo" title="Permalink to this definition"></a></dt>
+<dd><p>undoes the command
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-commands.Command">
+<span id="commands-command-module"></span><h2>commands.Command module<a class="headerlink" href="#module-commands.Command" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="commands.Command.Command">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">commands.Command.</span></span><span class="sig-name descname"><span class="pre">Command</span></span><a class="reference internal" href="_modules/commands/Command.html#Command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.Command.Command" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>abstract class for all commands.
+Implemented according to Command design pattern.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.Command.Command.execute">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/Command.html#Command.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.Command.Command.execute" title="Permalink to this definition"></a></dt>
+<dd><p>executes the command
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.Command.Command.undo">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/Command.html#Command.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.Command.Command.undo" title="Permalink to this definition"></a></dt>
+<dd><p>undoes the command
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-commands.MoveActorCommand">
+<span id="commands-moveactorcommand-module"></span><h2>commands.MoveActorCommand module<a class="headerlink" href="#module-commands.MoveActorCommand" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="commands.MoveActorCommand.MoveActorCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">commands.MoveActorCommand.</span></span><span class="sig-name descname"><span class="pre">MoveActorCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="objects.html#objects.Actor.Actor" title="objects.Actor.Actor"><span class="pre">Actor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/MoveActorCommand.html#MoveActorCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.MoveActorCommand.MoveActorCommand" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#commands.Command.Command" title="commands.Command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.MoveActorCommand.MoveActorCommand.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/MoveActorCommand.html#MoveActorCommand.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.MoveActorCommand.MoveActorCommand.execute" title="Permalink to this definition"></a></dt>
+<dd><p>moves actor to new position
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.MoveActorCommand.MoveActorCommand.undo">
+<span class="sig-name descname"><span class="pre">undo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/MoveActorCommand.html#MoveActorCommand.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.MoveActorCommand.MoveActorCommand.undo" title="Permalink to this definition"></a></dt>
+<dd><p>undoes the command
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-commands.RotateActorCommand">
+<span id="commands-rotateactorcommand-module"></span><h2>commands.RotateActorCommand module<a class="headerlink" href="#module-commands.RotateActorCommand" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="commands.RotateActorCommand.RotateActorCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">commands.RotateActorCommand.</span></span><span class="sig-name descname"><span class="pre">RotateActorCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="objects.html#objects.Actor.Actor" title="objects.Actor.Actor"><span class="pre">Actor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/RotateActorCommand.html#RotateActorCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.RotateActorCommand.RotateActorCommand" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#commands.Command.Command" title="commands.Command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.RotateActorCommand.RotateActorCommand.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/RotateActorCommand.html#RotateActorCommand.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.RotateActorCommand.RotateActorCommand.execute" title="Permalink to this definition"></a></dt>
+<dd><p>rotates actor to new angle
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.RotateActorCommand.RotateActorCommand.undo">
+<span class="sig-name descname"><span class="pre">undo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/RotateActorCommand.html#RotateActorCommand.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.RotateActorCommand.RotateActorCommand.undo" title="Permalink to this definition"></a></dt>
+<dd><p>undoes the command
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-commands.ZoomCommand">
+<span id="commands-zoomcommand-module"></span><h2>commands.ZoomCommand module<a class="headerlink" href="#module-commands.ZoomCommand" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="commands.ZoomCommand.ZoomCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">commands.ZoomCommand.</span></span><span class="sig-name descname"><span class="pre">ZoomCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="objects.html#objects.Actor.Actor" title="objects.Actor.Actor"><span class="pre">Actor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">da</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/ZoomCommand.html#ZoomCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.ZoomCommand.ZoomCommand" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#commands.Command.Command" title="commands.Command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.ZoomCommand.ZoomCommand.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/ZoomCommand.html#ZoomCommand.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.ZoomCommand.ZoomCommand.execute" title="Permalink to this definition"></a></dt>
+<dd><p>zooms the view by modifying actor’s vertical and horizontal field of view
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="commands.ZoomCommand.ZoomCommand.undo">
+<span class="sig-name descname"><span class="pre">undo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/ZoomCommand.html#ZoomCommand.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#commands.ZoomCommand.ZoomCommand.undo" title="Permalink to this definition"></a></dt>
+<dd><p>undoes the command
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-commands">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-commands" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Filip Chrzanowski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
